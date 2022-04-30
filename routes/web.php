@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\GymController;
+use App\Http\Controllers\SessionController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +20,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/coaches', function () {
+    return view('coaches.index');
+});
+
+Route::get('/gyms', [GymController::class, 'index'])->name('gym.index');
+Route::get('/gyms/create', [GymController::class, 'create'])->name('gym.create');
+// Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
+
+Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
+Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
