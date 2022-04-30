@@ -177,6 +177,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
 
     ],
 
@@ -190,11 +192,10 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
-    ])->toArray(),
 
-    'DataTables' => Yajra\DataTables\DataTablesServiceProvider::class,
+        // ...
+        'Datatables' => Yajra\Datatable\Facades\Datatables::class,
+    ])->toArray(),
 
 ];

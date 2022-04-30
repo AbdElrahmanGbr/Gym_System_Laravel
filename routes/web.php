@@ -34,3 +34,10 @@ Route::get('/gyms/create', [GymController::class, 'create'])->name('gym.create')
 
 Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
 Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
+
+
+//city
+Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+
+//users
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
