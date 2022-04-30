@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

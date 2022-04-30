@@ -1,43 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+@section('third_party_stylesheets')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+@endsection
+@section('content')
+<br><br>
+<table id="table_id" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+@endsection
+@section('third_party_scripts')
+<script src="{{ mix('js/app.js') }}" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
+<script>
+    $(document).ready(function() {
+        $('#table_id').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('cities.index') }}"
+            },
+            columns: [{
+                    data: 'id',
+                    name: 'id',
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                },
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    <script src="cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-</head>
-
-<body>
-    <section style="padding-top:60px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    {{$dataTable->table()}}
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-    {{$dataTable->scripts()}}
-
-    <section>
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
 
 
+                },
 
-        <script>
-            $(document).ready(function() {
-                $('#myTable').DataTable();
-            });
-        </script>
-</body>
-
-</html>
+            ]
+        });
+    });
+</script>
+@endsection
