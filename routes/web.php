@@ -1,8 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\GymController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +31,16 @@ Route::get('/coaches', function () {
     return view('coaches.index');
 });
 
-Route::get('/gyms',[GymController::class ,'index'])->name('gym.index');
-Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
+Route::get('/gyms', [GymController::class, 'index'])->name('gym.index');
+Route::get('/gyms/create', [GymController::class, 'create'])->name('gym.create');
+// Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
 
-Route::get('/sessions',[SessionController::class, 'index'])->name('sessions.index');
-Route::get('/sessions/create',[SessionController::class, 'create'])->name('sessions.create');
+Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
+Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
 
 
+//city
+Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+
+//users
+Route::get('/users', [UserController::class, 'index'])->name('users.index');

@@ -2,43 +2,57 @@
 
 @section('content')
 <div class="text-center  mt-5">
-    <h1 > Training Sessions</h1>
-            <a href="{{route('sessions.create')}}" class="btn btn-success my-3">Add Session</a>
+    <h1> Training Sessions</h1>
+    <a href="{{route('sessions.create')}}" class="btn btn-success my-3">Add Session</a>
+</div>
 
-        </div>
-        <table class="table table-hover table-dark table-bordered my-4">
-            <thead>
-              <tr class="text-center">
-                <th  scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">start_at</th>
-                <th scope="col">finish_at</th>
-                <th scope="col">Coach</th>
-                <th colspan="3"  scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-            @foreach ($sessions as $session)
-                <tr>
-                    <th scope="row">{{$session['id']}}</th>
-                    <td>{{$session['name']}}</td>
-                    <td>{{$session['start_at']}}</td>
-                    <td>{{$session['finish_at']}}</td>
-                    <td>Yara</td> <!-- coaches name-->
+<table class="table cell-border compact stripe table-dark my-4 text-dark" id="myTable">
+    <thead>
+        <tr class="text-white">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Start-at</th>
+            <th scope="col">Finish-at</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+</table>
+@endsection
+@section('javascripts')
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{route('sessions.index')}}"
+            },
+            columns: [
 
-                    <td class="text-center"><a href="#" class="btn btn-info">View</a></td>
-                    <td class="text-center"><a   href="#" class="btn btn-primary">Edit</a></td>
+                {
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'start_at',
+                    name: 'start_at'
+                },
+                {
+                    data: 'finish_at',
+                    name: 'finish_at'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                }
+            ]
+        });
 
-                    <form method="POST" action="#">
-                    @csrf
-                    @method('DELETE')
-                    <td class="text-center"><button  type="submit" class="btn btn-danger" onclick="return confirm('You are about to delete this session ,Are you sure')">Delete</button></td>
-                    </form>
-
-                </tr>
-
-
-            @endforeach
-            </tbody>
-          </table>
-          @endsection
+    });
+</script>
+@endsection
