@@ -44,12 +44,23 @@ Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
 
 //users
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
 //city manager routes
+
+//-------------------------- City Managers Routes --------------------------------
+Route::get('city-managers/create', [CityManagerController::class, 'create'])->name('city-managers.create');
+
+Route::post('destroy-city-manager', [cityManagerController::class, 'destroy'])->name('city-managers.destroy');
+
 Route::GET('/city-managers', [CityManagerController::class, 'index'])->name('city-managers.index');
 
 Route::GET('/city-managers/{id}/edit', [CityManagerController::class, 'edit'])->name('city-managers.edit');
 
 Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->name('city-managers.update');
+
+Route::POST('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
+
+
 
 
 

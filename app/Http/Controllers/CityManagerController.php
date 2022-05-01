@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Staff;
+use App\Models\City;
 use Illuminate\Http\Request;
 
 class CityManagerController extends Controller
@@ -80,4 +82,46 @@ class CityManagerController extends Controller
 
         return redirect()->route('city-managers.index');
     }
+
+    //----------------------- create new member -------------------------
+    public function create() {
+
+        $cities = City::all();
+        return view(
+            'city-managers.create',
+            [
+                'cities' => $cities,
+            ]
+        );
+    }
+    public function store(CityManagerRequest $request) {
+        $requestData = request()->all();
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
+            $requestData['avatar']->move(public_path('images'), $imageName);
+        } else {
+            $imageName = 'user_avatar.png';
+        }
+        $cityManager = Staff::create([
+            'name' => $requestData['name'],
+            'email' => $requestData['email'],
+            'password' => Hash::make($requestData['password']),
+            'avatar' =>  $imageName,
+            'national_id' => $requestData['national_id'],
+        ]);
+        $cityManager->assignRole('city_manager');
+        $staffMember = Staff::where('name', $requestData['name'])->first();
+
+        $city = City::find($requestData['city']);
+        $city->staff_id =  $staffMember->id;
+        $city->save();
+        return redirect()->route('city-managers.index');
+    }
+    //-------------------- delete member -------------------------------
+    public function destroy(Request $request) {
+
+        $member = Staff::where('id', $request->id)->delete();
+        return Response()->json($member);
+    }
+
 }
