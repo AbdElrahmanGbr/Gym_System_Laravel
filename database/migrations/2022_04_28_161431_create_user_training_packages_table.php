@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('user_training_packages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->timestamp('date');
+            $table->timestamp('date')->nullable();
             $table->bigInteger('price');
             $table->foreignId('training_package_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

@@ -41,5 +41,9 @@ Route::get('/sessions/create', [SessionController::class, 'create'])->name('sess
 //city
 Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
 
+
 //users
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+//city manager routes
+Route::GET('/city-managers', [CityManagerController::class, 'index'])->name('city-managers.index');
+
