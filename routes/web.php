@@ -47,3 +47,9 @@ Route::get('/users', [UserController::class, 'index'])->name('users.index');
 //city manager routes
 Route::GET('/city-managers', [CityManagerController::class, 'index'])->name('city-managers.index');
 
+Route::GET('/city-managers/{id}/edit', [CityManagerController::class, 'edit'])->name('city-managers.edit');
+
+Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->name('city-managers.update');
+
+
+
