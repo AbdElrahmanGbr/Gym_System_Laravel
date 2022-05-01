@@ -52,8 +52,21 @@ Route::GET('/cities/{city}/edit', [CityController::class, 'edit'])->name('cities
 Route::DELETE('/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
 
 
-//users
-Route::GET('/users', [UserController::class, 'index'])->name('users.index');
 
-//training package
-Route::GET('/training-package', [TrainingPackageController::class, 'index'])->name('training-package.index');
+//users
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+//city manager routes
+
+//-------------------------- City Managers Routes --------------------------------
+Route::get('city-managers/create', [CityManagerController::class, 'create'])->name('city-managers.create');
+
+Route::post('destroy-city-manager', [cityManagerController::class, 'destroy'])->name('city-managers.destroy');
+
+Route::GET('/city-managers', [CityManagerController::class, 'index'])->name('city-managers.index');
+
+Route::GET('/city-managers/{id}/edit', [CityManagerController::class, 'edit'])->name('city-managers.edit');
+
+Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->name('city-managers.update');
+
+Route::POST('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
