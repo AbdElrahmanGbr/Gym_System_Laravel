@@ -41,15 +41,18 @@ Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
 Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
 // Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
 
-//sessions
+//-------------------------- Sessions Routes --------------------------------
 Route::GET('/sessions', [SessionController::class, 'index'])->name('sessions.index');
 Route::GET('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
 Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');
+Route::post('destroy', [SessionController::class, 'destroy'])->name('sessions.destroy');
+Route::get('edit', [SessionController::class, 'edit'])->name('sessions.edit');
 
-//cities
-Route::GET('/cities', [CityController::class, 'index'])->name('cities.index');
-Route::GET('/cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
-Route::DELETE('/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+//-------------------------- Cities Routes --------------------------------
+Route::get('cities', [CityController::class, 'index'])->name('cities.index');
+Route::post('edit-city', [CityController::class, 'edit'])->name('cities.edit');
+Route::post('destroy-city', [CityController::class, 'destroy'])->name('cities.destroy');
+Route::post('store-city', [CityController::class, 'store'])->name('cities.store');
 
 
 
@@ -70,3 +73,16 @@ Route::GET('/city-managers/{id}/edit', [CityManagerController::class, 'edit'])->
 Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->name('city-managers.update');
 
 Route::POST('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
+
+/* ======================= Coaches Routes ========================= */
+Route::get('/coaches', [CoachController::class, 'index'])->name('coaches.index');
+
+Route::get('/coaches/profile/show', [CoachController::class, 'profile'])->name('coaches.profile');
+
+Route::get("/coaches/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
+
+Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coaches.sessions');
+
+Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
+
+/* ===================================================================== */

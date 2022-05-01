@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'remaining_sessions',
+        'avatar',
+        'birth_date',
+        'gym_id',
+        'email_verified_at'
     ];
 
     /**
@@ -44,11 +50,15 @@ class User extends Authenticatable
 
     public function sessions()
     {
-        return $this->belongsToMany(Session::class, 'user_sessions', 'user_id', 'session_id');
+        return $this->belongsToMany(Session::class, 'session_user', 'user_id', 'session_id');
     }
 
     public function trainingPackage()
     {
-        return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_packages_id');
+        return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_package_id');
+    }
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
     }
 }

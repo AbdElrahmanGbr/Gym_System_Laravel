@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+
+
 class Gym extends Model
 {
     use HasFactory;
@@ -13,7 +16,8 @@ class Gym extends Model
         'name',
         'image',
         'revenue',
-        'city_id'
+        'city_id',
+        'created_by'
     ];
 
     // Managers
@@ -35,5 +39,10 @@ class Gym extends Model
     public function trainingPackages()
     {
         return $this->hasMany(TrainingPackage::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 }

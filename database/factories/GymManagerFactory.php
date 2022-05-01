@@ -20,7 +20,10 @@ class GymManagerFactory extends Factory
     {
         return [
             'gym_id' => $this->faker->randomElement(Gym::all())['id'],
-            'staff_id' => $this->faker->randomElement(Staff::where('role', 'gym_manager')->get())['id']
+            'staff_id' => $this->faker->unique()->randomElement(
+                Staff::role('gym_manager')->get()
+
+            )['id']
         ];
     }
 }

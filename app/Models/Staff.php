@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
 
 class Staff extends Model
 {
     use HasFactory;
-    use HasRoles;
-    protected $guard_name = 'web';
+
     protected $fillable = [
         'name',
         'email',
@@ -40,5 +38,10 @@ class Staff extends Model
     public function coachSessions()
     {
         return $this->belongsToMany(Session::class, 'coach_sessions', 'staff_id', 'session_id');
+    }
+
+    public function session()
+    {
+        return $this->belongsToMany(Session::class);
     }
 }

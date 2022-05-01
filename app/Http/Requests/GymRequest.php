@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GmyRequest extends FormRequest
+class GymRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,11 @@ class GmyRequest extends FormRequest
      */
     public function rules()
     {
-        return [ 
-            'name' => ['required','min:4','max:15'],
-            'image' => ['required','image','mimes:jpg,png,jpeg,gif,svg'],
+        return [
+            'name' => ['required', 'min:4', 'max:15'],
+            'image' => ['required', 'image', 'mimes:jpg,png,jpeg,gif,svg', 'max:1000'],
             'city_id' => ['required'],
-            'staff_id' => ['required'],  
+            'staff_id' => ['required'],
         ];
     }
 

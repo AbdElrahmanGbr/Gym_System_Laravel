@@ -18,7 +18,7 @@ class SessionStaffFactory extends Factory {
     public function definition() {
         return [
             'session_id' => $this->faker->randomElement(Session::all())['id'],
-            'staff_id' => $this->faker->randomElement(Staff::where('role', 'coach')->get())['id']
+            'staff_id' => $this->faker->randomElement(Staff::role('coach')->get())['id']
         ];
     }
 }

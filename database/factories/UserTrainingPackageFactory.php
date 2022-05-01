@@ -18,11 +18,13 @@ class UserTrainingPackageFactory extends Factory
      */
     public function definition()
     {
+        $training_package = $this->faker->randomElement(TrainingPackage::all());
         return [
-            'training_package_id' => $this->faker->randomElement(TrainingPackage::all())['id'],
+            'training_package_id' => $training_package['id'],
             'user_id' => $this->faker->randomElement(User::all())['id'],
             'date' => $this->faker->dateTimeThisYear($max = 'now'),
-            'price' => rand(50, 1000)
+            'price' => $training_package['price'],
+            'session_number' => $training_package['session_number']
         ];
     }
 }
