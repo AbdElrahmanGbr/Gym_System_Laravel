@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\City;
+use App\Models\UserSession;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CitySeeder extends Seeder
+class UserSessionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class CitySeeder extends Seeder
      */
     public function run()
     {
-        City::factory()->count(2)->create();
+        UserSession::factory()->count(2)->create();
     }
 }

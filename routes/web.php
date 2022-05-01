@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\SessionController;

@@ -21,7 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'gender',
     ];
 
     /**
@@ -42,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sessions()
+    {
+        return $this->belongsToMany(Session::class, 'user_sessions', 'user_id', 'session_id');
+    }
+
+    public function trainingPackage()
+    {
+        return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_packages_id');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,11 @@ class SessionFactory extends Factory
      */
     public function definition()
     {
+        $date = $this->faker->dateTimeThisYear($max = 'now');
         return [
-            'name' => $this->faker->name,
-            'start_at' => $this->faker->dateTime(),
-            'finish_at' => $this->faker->dateTime(),
-
+            'name' => $this->faker->company(),
+            'start_at' => $date,
+            'finish_at' => Carbon::parse($date)->addHours(2),
         ];
     }
 }
