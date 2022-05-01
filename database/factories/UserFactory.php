@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Gym;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -21,16 +22,16 @@ class UserFactory extends Factory
     public function definition()
     {
         $gender = $this->faker->randomElement(['male', 'female']);
-        $role = $this->faker->randomElement(['user', 'coach', 'admin']);
 
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => Hash::make(12345),
+            'password' => Hash::make(123456),
             'remember_token' => Str::random(10),
             'gender' => $gender,
-            'role' => $role,
+            'gym_id' => $this->faker->randomElement(Gym::all())['id'],
+            'birth_date' => $this->faker->dateTimeThisYear($max = 'now'),
         ];
     }
 

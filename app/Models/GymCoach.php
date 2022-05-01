@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GymCoaches extends Model
+class GymCoach extends Model
 {
     use HasFactory;
+    protected $table = 'gym_coaches';
     protected $fillable = [
-        'name',
-        'session_id',
-        'staffs_id',
-    ]; //array
+        'gym_id', 'staff_id'
+    ];
 }

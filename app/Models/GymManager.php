@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GymManager extends Model
 {
-use HasFactory;
+    use HasFactory;
     protected $fillable = [
         'staff_id',
         'gym_id',

@@ -17,6 +17,7 @@ class Gym extends Model
         'image',
         'revenue',
         'city_id',
+        'created_by'
     ];
 
     // Managers
@@ -38,5 +39,10 @@ class Gym extends Model
     public function trainingPackages()
     {
         return $this->hasMany(TrainingPackage::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 }

@@ -19,7 +19,10 @@ class CityFactory extends Factory
     {
         return [
             'name' => $this->faker->city(),
-            'staff_id' => $this->faker->randomElement(Staff::where('role', 'city_manager')->get())['id']
+            'staff_id' => $this->faker->unique()->randomElement(
+                Staff::role('city_manager')->get()
+
+            )['id']
         ];
     }
 }

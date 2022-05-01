@@ -6,15 +6,13 @@ use App\Models\Gym;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class GymSeeder extends Seeder
-{
+class GymSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
-        Gym::factory()->count(50)->create();
+    public function run() {
+        Gym::factory()->count(10)->create();
     }
 }

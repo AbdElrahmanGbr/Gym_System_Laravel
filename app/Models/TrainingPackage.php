@@ -13,6 +13,7 @@ class TrainingPackage extends Model
         'name',
         'price',
         'session_number',
+        'gym_id',
     ];
 
     public function trainingPackageGym()
