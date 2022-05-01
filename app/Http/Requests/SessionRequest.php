@@ -24,27 +24,26 @@ class SessionRequest extends FormRequest
     public function rules()
     {
         return [
-            
+
             'name' => ['required'],
-            'start' => ['required'], 
-            'day' => ['required'], 
-            'finish' => ['required','after:start'], 
-            'coaches'=>['required','exists:staff,id'],//prevent from inspects hacks
+            'start' => ['required'],
+            'day' => ['required'],
+            'finish' => ['required', 'after:start'],
+            'coaches' => ['required', 'exists:users,id'], //prevent from inspects hacks
 
         ];
-
     }
 
     public function messages()
     {
-      return [
-             'name.required' =>'You must Enter a name for session :( ',
-             'day.required' =>'You must choose a date:( ',
-             'start.required' =>'You must choose a start time:( ',
-             'finish.required'=>'You must choose a finishing time ',
-             'finish.after'=>'You must choose a time after start time',
-             'coaches.required'=>'You must choose one or more coach ',
-             'coaches.exists'=>'I got you, Stop doing this -_-',
-         ];
+        return [
+            'name.required' => 'You must Enter a name for session :( ',
+            'day.required' => 'You must choose a date:( ',
+            'start.required' => 'You must choose a start time:( ',
+            'finish.required' => 'You must choose a finishing time ',
+            'finish.after' => 'You must choose a time after start time',
+            'coaches.required' => 'You must choose one or more coach ',
+            'coaches.exists' => 'I got you, Stop doing this -_-',
+        ];
     }
 }

@@ -48,12 +48,9 @@ Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.st
 
 //cities
 Route::GET('/cities', [CityController::class, 'index'])->name('cities.index');
-Route::GET('/cities/create', [CityController::class, 'create'])->name('cities.create');
-Route::POST('/cities', [CityController::class, 'store'])->name('cities.store');
-Route::GET('/cities/{id}', [CityController::class, 'show'])->name('cities.show');
-Route::GET('/cities/{id}/edit', [CityController::class, 'edit'])->name('cities.edit');
-Route::PUT('/cities/{id}', [CityController::class, 'update'])->name('cities.update');
-Route::DELETE('/cities/{id}', [CityController::class, 'destroy'])->name('cities.destroy');
+Route::GET('/cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
+Route::DELETE('/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+
 
 //users
 Route::GET('/users', [UserController::class, 'index'])->name('users.index');
