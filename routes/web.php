@@ -20,32 +20,43 @@ use App\Http\Controllers\TrainingPackageController;
 |
 */
 
-Route::get('/', function () {
+Route::GET('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/coaches', function () {
-    return view('coaches.index');
-});
+//coaches
+Route::GET('/coaches', [CoacheController::class, 'index'])->name('coaches.index');
 
-Route::get('/gyms', [GymController::class, 'index'])->name('gym.index');
-Route::get('/gyms/create', [GymController::class, 'create'])->name('gym.create');
+//gyms
+Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
+Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
+Route::POST('/gyms', [GymController::class, 'store'])->name('gyms.store');
+Route::GET('/gyms/{id}', [GymController::class, 'show'])->name('gyms.show');
+Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
+Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
+Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
 // Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
 
-Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
-Route::get('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
+//sessions
+Route::GET('/sessions', [SessionController::class, 'index'])->name('sessions.index');
+Route::GET('/sessions/create', [SessionController::class, 'create'])->name('sessions.create');
+Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');
 
-
-//city
-Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
-Route::get('/training-package', [CityController::class, 'index'])->name('training-package.index');
+//cities
+Route::GET('/cities', [CityController::class, 'index'])->name('cities.index');
+Route::GET('/cities/create', [CityController::class, 'create'])->name('cities.create');
+Route::POST('/cities', [CityController::class, 'store'])->name('cities.store');
+Route::GET('/cities/{id}', [CityController::class, 'show'])->name('cities.show');
+Route::GET('/cities/{id}/edit', [CityController::class, 'edit'])->name('cities.edit');
+Route::PUT('/cities/{id}', [CityController::class, 'update'])->name('cities.update');
+Route::DELETE('/cities/{id}', [CityController::class, 'destroy'])->name('cities.destroy');
 
 //users
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::GET('/users', [UserController::class, 'index'])->name('users.index');
 
 //training package
-Route::get('/training-package', [TrainingPackageController::class, 'index'])->name('training-package.index');
+Route::GET('/training-package', [TrainingPackageController::class, 'index'])->name('training-package.index');

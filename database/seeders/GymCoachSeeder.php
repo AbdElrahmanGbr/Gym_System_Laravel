@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\GymCoach;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\GymCoaches;
 
-class GymCoachSeeder extends Seeder
+class GymCoachesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,8 @@ class GymCoachSeeder extends Seeder
      */
     public function run()
     {
-        GymCoach::factory()->count(50)->create();
+        GymCoaches::factory()
+            ->count(50)
+            ->create();
     }
 }

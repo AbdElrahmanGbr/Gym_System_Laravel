@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
     use HasFactory;
+    protected $fillable = [
+
+        'name',
+        'start_at',
+        'finish_at',
+    ]; //array of columns which allowed to change
 
     public function coaches()
     {

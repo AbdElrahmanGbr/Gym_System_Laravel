@@ -21,6 +21,7 @@ class UserFactory extends Factory
     public function definition()
     {
         $gender = $this->faker->randomElement(['male', 'female']);
+        $role = $this->faker->randomElement(['user', 'coach', 'admin']);
 
         return [
             'name' => $this->faker->name(),
@@ -29,6 +30,7 @@ class UserFactory extends Factory
             'password' => Hash::make(12345),
             'remember_token' => Str::random(10),
             'gender' => $gender,
+            'role' => $role,
         ];
     }
 
