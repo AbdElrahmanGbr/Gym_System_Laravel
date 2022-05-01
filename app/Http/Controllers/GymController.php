@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GymRequest;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
@@ -40,7 +41,7 @@ class GymController extends Controller
         return $filename;
     }
     //----------------------store--------------------//
-    public function store(Request $request)
+    public function store(GymRequest $request)
     {
         $gymData = request()->all();
         $fileName = $this->getImageData($request);
@@ -81,7 +82,7 @@ class GymController extends Controller
         ]);
     }
     //----------------------update--------------------//
-    public function update($id, Request $request)
+    public function update($id, GymRequest $request)
     {
         $gym = Gym::find($id);
         $fileName = $this->getImageData($request);

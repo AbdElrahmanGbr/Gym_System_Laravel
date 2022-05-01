@@ -3,18 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
-use Cog\Contracts\Ban\Bannable as BannableContract;
-use Cog\Laravel\Ban\Traits\Bannable;
+use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Authenticatable implements BannableContract
+class Staff extends Model
 {
-    use HasFactory, Notifiable, HasRoles, Bannable;
-
-    protected $guard_name = 'web';
-    protected $guard = 'staff';
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -22,11 +15,7 @@ class Staff extends Authenticatable implements BannableContract
         'password',
         'avatar',
         'national_id',
-
-    ];
-
-    protected $hidden = [
-        'password', 'remember_token'
+        'is_baned'
     ];
 
     // City Manager
@@ -48,8 +37,9 @@ class Staff extends Authenticatable implements BannableContract
 
     public function coachSessions()
     {
-        return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
+        return $this->belongsToMany(Session::class, 'coach_sessions', 'staff_id', 'session_id');
     }
+
     public function session()
     {
         return $this->belongsToMany(Session::class);
