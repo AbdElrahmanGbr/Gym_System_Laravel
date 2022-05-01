@@ -15,6 +15,6 @@ class UserSessionSeeder extends Seeder
      */
     public function run()
     {
-        UserSession::factory()->count(2)->create();
+        UserSession::factory()->count(50)->create();
     }
 }

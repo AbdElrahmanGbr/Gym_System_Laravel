@@ -7,6 +7,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TrainingPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,10 @@ Route::get('/sessions/create', [SessionController::class, 'create'])->name('sess
 
 //city
 Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+Route::get('/training-package', [CityController::class, 'index'])->name('training-package.index');
 
 //users
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+//training package
+Route::get('/training-package', [TrainingPackageController::class, 'index'])->name('training-package.index');

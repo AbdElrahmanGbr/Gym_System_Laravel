@@ -15,6 +15,6 @@ class UserTrainingPackageSeeder extends Seeder
      */
     public function run()
     {
-        UserTrainingPackage::factory()->count(2)->create();
+        UserTrainingPackage::factory()->count(50)->create();
     }
 }
