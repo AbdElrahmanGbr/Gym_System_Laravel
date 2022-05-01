@@ -13,9 +13,8 @@ class CityController extends Controller
         if (request()->ajax()) {
             return datatables()->of(City::latest()->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<a href="' . route('cities.show', $data->id) . '" class="btn btn-primary btn-sm mx-4">Update</a>';
-                    $button .= '<a href="' . route('cities.delete', $data->id) . '" class="btn btn-danger btn-sm mx-4">Delete</a>';
-
+                    $button = '<a href="javascript:void(0)" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-info btn-sm mx-4">Edit</a>';
+                    $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-4">Delete</a>';
                     return $button;
                 })
                 ->rawColumns(['action'])->make(true);
@@ -23,9 +22,9 @@ class CityController extends Controller
         return view('cities.index');
     }
 
-    public  function show()
+    public function destroy(Request $request)
     {
-
-        return "sayed";
+        $city = City::where('id', $request->id)->delete();
+        return (Response()->json($city));
     }
 }
