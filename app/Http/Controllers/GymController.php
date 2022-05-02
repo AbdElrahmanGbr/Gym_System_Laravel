@@ -7,55 +7,99 @@ use App\Models\Staff;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
+use App\Models\User;
+
 
 class GymController extends Controller
 {
-    public function index()
-    {
-        if (request()->ajax()) {
-            return datatables()->of(Staff::where('role','gym_manager')->get())
-               ->addColumn('action', function ($data) {
-                   $button ='<a href="'.route('gym-managers.edit',$data->id).'" class="btn btn-info btn-sm mx-2">Edit</a>';
-                   $button .='<a href="javascript:void(0);" onClick = "deleteFunc('.$data->id.')"class="btn btn-danger btn-sm mx-2">Delete</a>';
-                   return $button;
-               })
-               ->rawColumns(['action'])->make(true);
-        }
-        return view('gym-managers.index');
-    }
-//--------------------------- edit staff member -----------------------
-public function edit($staffId)
-{
 
-    $staff = Staff::find($staffId);
-    $gymId = gymManager::where('staff_id',$staffId)->first()->gym_id;
-    //dd($gymId);
-    //$gymId = $gymMan->gym_id;
-    $gym = Gym::where('id',$gymId)->first();
-    //dd($gym);
-    $cities = City::all();
-    $gyms = Gym::all();
-        return view('gym-managers.edit',[
-            'staff' => $staff,
-            'gyms' => $gyms,
-            'cities' => $cities,
-            'gym' => $gym
 
+    //----------------------index--------------------//
+    public function index(){
+        $gyms=Gym::all();
+        return view('gyms.index',[   
+            'gyms'=>$gyms
         ]);
-}
-
-    public function create()
-    {
-        dd('@GymController->create');
     }
-    public function destroy(Request $request)
-   {
+//----------------------create--------------------//
+    public function create(){
+        $staff=Staff::where("role","gym_manager")->get();                            //to return array
+        $cities=City::all();
+        return view('gyms.create',[
+            'staff' => $staff ,
+            'cities' => $cities
+        ]); 
+    }
+//----------------------getImageData--------------------//
+    public function getImageData($imageData){
+        $file = $imageData->file('image');
+        $extenstion = $file->getClientOriginalExtension();
+        $filename = time().'.'.$extenstion;
+        $file->move('uploads/gyms/', $filename);
+        return $filename;
+    }
+//----------------------store--------------------//
+    public function store(Request $request){
+        $gymData = request()->all();
+        $fileName=$this->getImageData($request);
+        $newGym=Gym::create([
+            'name'=>$gymData['name'],          
+            'revenue'=>0,
+            'image'=> $fileName  ,
+            'city_id'=> $gymData['city_id']         
+        ]);
+    
+        GymManager::create([                                              
+            "staff_id"=>$gymData['staff_id'],
+            "gym_id"=>$newGym->id
+        ]);
+        return redirect()->route("gyms.index");
+    }
+//----------------------Show--------------------//
+    public function show($id){
+        $gym=Gym::find($id);
+        $managers=Gym::find($id)->gymManager;
+        // dd($managers);
+        return view('gyms.show',[
+            'gym' => $gym,
+            'managers' =>$managers
+        ]); 
+    }
+//----------------------edit--------------------//
+    public function edit($id){
+        $gym=Gym::find($id);
+        $staff=Staff::where("role","gym_manager")->get();  
+        $cities=City::all(); 
+        return view('gyms.edit',[
+            'gym' => $gym ,
+            'staff' => $staff,
+            'cities' => $cities
+        ]); 
+    }
+//----------------------update--------------------//
+    public function update($id ,Request $request){
+        $gym=Gym::find($id);
+        $fileName=$this->getImageData($request);
+        $updatedGymData=[
+            'name'=>$request['name'],          
+            'image'=> $fileName  ,
+            'city_id'=> $request['city_id'] ,        
+        ];
+        $updatedGymManagerData=[
 
-           $member = Staff::where('id', $request->id)->delete();
-           return Response()->json($member);
+            "staff_id"=>$request['staff_id']
+        ];
+        Gym::where('id',$gym->id)->update($updatedGymData); 
+        GymManager::where('gym_id',$gym->id)->update($updatedGymManagerData);        
+        return redirect()->route("gyms.index");
+    }
+    //----------------------destroy--------------------//
+    public function destroy($id){ 
+        Gym::find($id)->delete();
+        return redirect()->route("gyms.index");
+    }
 
 
-   }
 
 
 }

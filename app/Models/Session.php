@@ -14,4 +14,14 @@ class Session extends Model
         'start_at',
         'finish_at',
     ]; //array of columns which allowed to change
+
+
+    public function coaches()
+    {
+        return $this->belongsToMany(Staff::class, 'coach_sessions', 'session_id', 'staff_id');
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_sessions', 'session_id', 'user_id');
+    }
 }

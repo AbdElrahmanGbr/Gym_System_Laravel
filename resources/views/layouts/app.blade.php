@@ -83,7 +83,7 @@
 
 <script src="{{ mix('js/app.js') }}" defer></script>
 
-@yield('third_party_scripts')
+@yield('third_party_stylesheets')
 
 @stack('page_scripts')
 </body>

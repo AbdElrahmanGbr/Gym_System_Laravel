@@ -10,6 +10,7 @@ use App\Http\Controllers\gymManagerController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\CoachController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,6 +65,22 @@ Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->nam
 Route::POST('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
 
 
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::GET('/coaches', function () {
+        return view('coaches.index');
+    });
+    Route::GET('/gyms',[GymController::class ,'index'])->name('gyms.index');
+    Route::GET('/gyms/create',[GymController::class ,'create'])->name('gyms.create');
+    Route::POST('/gyms',[GymController::class ,'store'])->name('gyms.store');
+    Route::GET('/gyms/{id}',[GymController::class ,'show'])->name('gyms.show');
+    Route::GET('/gyms/{id}/edit',[GymController::class ,'edit'])->name('gyms.edit');
+    Route::PUT('/gyms/{id}',[GymController::class ,'update'])->name('gyms.update');
+    Route::DELETE('/gyms/{id}',[GymController::class ,'destroy'])->name('gyms.destroy');
+
+
+
 Route::get('gym-managers',[gymManagerController::class,'index'])->name('gym-managers.index');
 Route::get('gym-managers/create', [gymManagerController::class, 'create'])->name('gym-managers.create');
 Route::post('gym-managers',[gymManagerController::class, 'store'])->name('gym-managers.store');
@@ -74,5 +91,7 @@ Route::post('destroy-gym-manager',[gymManagerController::class,'destroy'])->name
 //     $gym = App\Models\Gym::where('city_id',$id)->get();
 //     return response()->json($gym);
 // });
+
+});
 
 
