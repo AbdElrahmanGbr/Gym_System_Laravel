@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -64,8 +65,29 @@ class UserController extends Controller
 
     //=========================================================================//
 
-    public function update(Request $request)
+    public function update(UserRequest $request)
     {
+        $token = explode(' ', $request->header()['authorization'][0])[1];
+        $user = User::where('remember_token', $token)->first();
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'remember_token' => ['It does not match'],
+            ]);
+        }
+        $data = $request->all();
+        $exist = array_key_exists('old_password', $data);
+        if ($exist) {
+            if (Hash::check($data['old_password'], $user->password)) {
+                $data['password'] = Hash::make($data['password']);
+            } else {
+                throw ValidationException::withMessages([
+                    'password' => ['The current password is invalid'],
+                ]);
+            }
+        }
+
+        $user->update($data);
+        return new UserResource($user);
     }
 
     //=========================================================================/
