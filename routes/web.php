@@ -95,3 +95,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::post('/login',[UserController::class, 'login']);
 
 // Route::post('/register', [UserController::class, 'register']);
+
+
+//-------------------------- Users Routes --------------------------------
+Route::get('users', [UserController::class, 'index'])->name('users.index');
+Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
+
