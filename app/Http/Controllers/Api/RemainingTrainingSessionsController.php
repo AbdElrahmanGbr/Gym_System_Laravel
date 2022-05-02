@@ -10,12 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\SessionResource;
 
-
-
-
-
-
-
 class RemainingTrainingSessionsController extends Controller
 {
     public function show()
