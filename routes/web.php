@@ -92,6 +92,6 @@ Route::get("/coaches/password", [CoachController::class, 'password'])->name('coa
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/login',[UserController::class, 'login']);
+// Route::post('/login',[UserController::class, 'login']);
 
-Route::post('/register', [UserController::class, 'register']);
+// Route::post('/register', [UserController::class, 'register']);
