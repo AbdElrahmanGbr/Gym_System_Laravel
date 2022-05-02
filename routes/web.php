@@ -6,6 +6,9 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\gymManagerController;
+use App\Http\Controllers\TrainingPackageController;
+use App\Http\Controllers\CoachController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +64,15 @@ Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->nam
 Route::POST('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
 
 
-
+Route::get('gym-managers',[gymManagerController::class,'index'])->name('gym-managers.index');
+Route::get('gym-managers/create', [gymManagerController::class, 'create'])->name('gym-managers.create');
+Route::post('gym-managers',[gymManagerController::class, 'store'])->name('gym-managers.store');
+Route::get('gym-managers/{gymManagerId}/edit',[gymManagerController::class, 'edit'])->name('gym-managers.edit');
+Route::put('gym-managers/{gymManagerId}',[gymManagerController::class, 'update'])->name('gym-managers.update');
+Route::post('destroy-gym-manager',[gymManagerController::class,'destroy'])->name('gym-managers.destroy');
+// Route::get('getGym/{id}', function ($id) {
+//     $gym = App\Models\Gym::where('city_id',$id)->get();
+//     return response()->json($gym);
+// });
 
 
