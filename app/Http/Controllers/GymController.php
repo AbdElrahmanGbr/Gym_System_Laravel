@@ -23,8 +23,39 @@ class GymController extends Controller
         }
         return view('gym-managers.index');
     }
+//--------------------------- edit staff member -----------------------
+public function edit($staffId)
+{
+
+    $staff = Staff::find($staffId);
+    $gymId = gymManager::where('staff_id',$staffId)->first()->gym_id;
+    //dd($gymId);
+    //$gymId = $gymMan->gym_id;
+    $gym = Gym::where('id',$gymId)->first();
+    //dd($gym);
+    $cities = City::all();
+    $gyms = Gym::all();
+        return view('gym-managers.edit',[
+            'staff' => $staff,
+            'gyms' => $gyms,
+            'cities' => $cities,
+            'gym' => $gym
+
+        ]);
+}
+
     public function create()
     {
         dd('@GymController->create');
     }
+    public function destroy(Request $request)
+   {
+
+           $member = Staff::where('id', $request->id)->delete();
+           return Response()->json($member);
+
+
+   }
+
+
 }
