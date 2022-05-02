@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\RemainingTrainingSessionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/attendance/history',[RemainingTrainingSessionsController::class, 'show']);
+
+Route::get('/session/remaining', [RemainingTrainingSessionsController::class, 'remainingSession']);
+
+Route::post('training-sessions/{id}/attend', [RemainingTrainingSessionsController::class, 'attendSession']);
