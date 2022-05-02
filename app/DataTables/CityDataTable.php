@@ -43,11 +43,10 @@ class CityDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('city-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1);
-
+            ->setTableId('city-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1);
     }
 
     /**
