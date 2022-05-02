@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\CityManagerController;
+use App\Http\Controllers\CoachController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -26,7 +28,7 @@ Route::GET('/', function () {
     return view('welcome');
 });
 
-Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
@@ -87,17 +89,7 @@ Route::get('/coaches/sessions', [CoachController::class, 'sessions'])->name('coa
 
 Route::get("/coaches/password", [CoachController::class, 'password'])->name('coaches.password');
 
-/* ===============================  login and register  ====================================== */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-// Route::post('/login',[UserController::class, 'login']);
-
-// Route::post('/register', [UserController::class, 'register']);
-
 
 //-------------------------- Users Routes --------------------------------
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
-

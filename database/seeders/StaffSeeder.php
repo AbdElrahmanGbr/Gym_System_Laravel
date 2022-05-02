@@ -22,7 +22,7 @@ class StaffSeeder extends Seeder
         $admin =  Staff::create([
             'name' => "Admin",
             'email' => "admin@admin.com",
-            'password' => Hash::make(123456),
+            'password' => Hash::make('123456'),
             'national_id' => rand(1, 20),
 
         ]);
