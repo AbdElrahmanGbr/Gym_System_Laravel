@@ -48,7 +48,7 @@ class SessionController extends Controller
     {
         $coaches = Staff::all()->where('role', '=', 'coach');
         return view('sessions.create', [
-            'coaches' => $coaches
+            'coaches' =>$coaches
         ]);
     }
 

@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+
+
 class Session extends Model
 {
     use HasFactory;
@@ -17,6 +20,7 @@ class Session extends Model
     ]; //array of columns which allowed to change
 
 
+<<<<<<< HEAD
     public function staff()   //relationship between sessions & coaches
     {
         return $this->belongsToMany(Staff::class);
@@ -37,3 +41,14 @@ class Session extends Model
         return $this->belongsToMany(Staff::class, 'session_staff', 'session_id', 'staff_id');
     }
 }
+=======
+    public function coaches()
+    {
+        return $this->belongsToMany(Staff::class, 'coach_sessions', 'session_id', 'staff_id');
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_sessions', 'session_id', 'user_id');
+    }
+}
+>>>>>>> d327182f648f8d48c4f933b4a1d42f2c5853cdf4

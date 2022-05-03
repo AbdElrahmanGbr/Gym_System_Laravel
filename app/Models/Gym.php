@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+<<<<<<< HEAD
 
 
 
@@ -12,10 +13,16 @@ class Gym extends Model
 {
     use HasFactory;
 
+=======
+class Gym extends Model
+{
+    use HasFactory;
+>>>>>>> d327182f648f8d48c4f933b4a1d42f2c5853cdf4
     protected $fillable = [
         'name',
         'image',
         'revenue',
+<<<<<<< HEAD
         'city_id',
         'created_by'
     ];
@@ -45,4 +52,8 @@ class Gym extends Model
     {
         return $this->hasMany(User::class);
     }
+=======
+        'city_id',   
+    ];
+>>>>>>> d327182f648f8d48c4f933b4a1d42f2c5853cdf4
 }
