@@ -32,10 +32,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-//coaches
-Route::GET('/coaches', [CoacheController::class, 'index'])->name('coaches.index');
 
-//gyms
+//-------------------------- Gym Routes --------------------------------
 Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
 Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
 Route::POST('/gyms', [GymController::class, 'store'])->name('gyms.store');
@@ -44,6 +42,31 @@ Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit')
 Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
 Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
 // Route::get('/gyms/create',[GymController::class ,'create'])->name('gym.create');
+
+Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
+    /* ======================= Payment Routes ========================= */
+    Route::get('stripe', [StripePaymentController::class, 'stripe']);
+    Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+
+    //-------------------------- Purchases Routes --------------------------------
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+    Route::post('destroy-purchase', [PurchaseController::class, 'destroy'])->name('destroy-purchase');
+
+    /* ======================= Attendance Routes ========================= */
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendances.index');
+    /* ======================= Revenue Routes ========================= */
+    Route::get('revenue', [RevenueController::class, 'show'])->name('revenue.show');
+
+
+
+    //-------------------------- Training Packages Routes --------------------------------
+    Route::get('training-packages', [TrainingPackageController::class, 'index'])->name('training-packages.index');
+    Route::get('training-packages/create', [TrainingPackageController::class, 'create'])->name('training-packages.create');
+    Route::post('training-packages', [TrainingPackageController::class, 'store'])->name('training-packages.store');
+    Route::get('training-packages/{trainingpackage}/edit', [TrainingPackageController::class, 'edit'])->name('training-packages.edit');
+    Route::put('training-packages/{trainingpackage}', [TrainingPackageController::class, 'update'])->name('training-packages.update');
+    Route::post('destroy-package', [TrainingPackageController::class, 'destroy'])->name('training-packages.destroy');
+});
 
 //-------------------------- Sessions Routes --------------------------------
 Route::GET('/sessions', [SessionController::class, 'index'])->name('sessions.index');
@@ -57,11 +80,6 @@ Route::get('cities', [CityController::class, 'index'])->name('cities.index');
 Route::post('edit-city', [CityController::class, 'edit'])->name('cities.edit');
 Route::post('destroy-city', [CityController::class, 'destroy'])->name('cities.destroy');
 Route::post('store-city', [CityController::class, 'store'])->name('cities.store');
-
-
-
-//users
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 //city manager routes
 

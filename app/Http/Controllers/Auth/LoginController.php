@@ -41,9 +41,9 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-
     }
-    public function showLoginForm(){
+    public function showLoginForm()
+    {
         return view('auth.login');
     }
 
@@ -51,13 +51,12 @@ class LoginController extends Controller
     {
 
         $loginRole = $request->loginRole;
-        $user = Staff::where('email',$request->email)->get()->first();
+        $user = Staff::where('email', $request->email)->get()->first();
         Auth::login($user);
         if ($loginRole == 'staff') {
             return redirect()->route('coaches.index');
         } else {
             return redirect()->route('home');
         }
-
     }
 }
