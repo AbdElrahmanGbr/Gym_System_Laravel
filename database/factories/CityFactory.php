@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\City;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
@@ -19,9 +18,11 @@ class CityFactory extends Factory
     public function definition()
     {
         return [
-            'name' => Str::random(10),
-            'staffs_id' => 1
+            'name' => $this->faker->city(),
+            'staff_id' => $this->faker->unique()->randomElement(
+                Staff::role('city_manager')->get()
 
+            )['id']
         ];
     }
 }
