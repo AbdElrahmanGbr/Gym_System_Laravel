@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\City;
+use App\Http\Requests\CityManagerRequest;
+use App\Http\Requests\CityManagerUpdateRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 
-class CityManagerController extends Controller
-{
+
+
+class CityManagerController extends Controller {
+
     public function index() {
         if (request()->ajax()) {
             return datatables()->of(Staff::role('city_manager')->get())
@@ -83,7 +89,6 @@ class CityManagerController extends Controller
 
         return redirect()->route('city-managers.index');
     }
-
     //----------------------- create new member -------------------------
     public function create() {
 
@@ -124,5 +129,4 @@ class CityManagerController extends Controller
         $member = Staff::where('id', $request->id)->delete();
         return Response()->json($member);
     }
-
 }
