@@ -7,8 +7,9 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\gymManagerController;
 use App\Http\Controllers\TrainingPackageController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CoachController;
 
 
 /*
@@ -97,9 +98,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::post('/register', [UserController::class, 'register']);
 
 
-//-------------------------- Users Routes --------------------------------
-Route::get('users', [UserController::class, 'index'])->name('users.index');
-Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::GET('/coaches', function () {
+        return view('coaches.index');
+    });
+    Route::GET('/gyms', [GymController::class, 'index'])->name('gyms.index');
+    Route::GET('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
+    Route::POST('/gyms', [GymController::class, 'store'])->name('gyms.store');
+    Route::GET('/gyms/{id}', [GymController::class, 'show'])->name('gyms.show');
+    Route::GET('/gyms/{id}/edit', [GymController::class, 'edit'])->name('gyms.edit');
+    Route::PUT('/gyms/{id}', [GymController::class, 'update'])->name('gyms.update');
+    Route::DELETE('/gyms/{id}', [GymController::class, 'destroy'])->name('gyms.destroy');
+
+
+
+    Route::get('gym-managers', [gymManagerController::class, 'index'])->name('gym-managers.index');
+    Route::get('gym-managers/create', [gymManagerController::class, 'create'])->name('gym-managers.create');
+    Route::post('gym-managers', [gymManagerController::class, 'store'])->name('gym-managers.store');
+    Route::get('gym-managers/{gymManagerId}/edit', [gymManagerController::class, 'edit'])->name('gym-managers.edit');
+    Route::put('gym-managers/{gymManagerId}', [gymManagerController::class, 'update'])->name('gym-managers.update');
+    Route::post('destroy-gym-manager', [gymManagerController::class, 'destroy'])->name('gym-managers.destroy');
+    Route::get('getGym/{id}', function ($id) {
+        $gym = App\Models\Gym::where('city_id', $id)->get();
+        return response()->json($gym);
+    });
+});
 
 //---------------------------- Training Packages Routes -----------------------------------------------
 Route::get('training-packages', [TrainingPackageController::class, 'index'])->name('training-packages.index');
