@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\City;
-use Illuminate\Http\Request;
+
 
 class CityManagerController extends Controller
 {
