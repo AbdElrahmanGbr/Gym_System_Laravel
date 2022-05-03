@@ -43,6 +43,7 @@ class gymManagerController extends Controller
 
         ]);
     }
+
     public function update($staffId)
     {
         $requestData = request()->all();
@@ -60,8 +61,8 @@ class gymManagerController extends Controller
             'gym_id' => $requestData['gym']
         ]);
 
-        // $gym->gym_id = $requestData['gym'];
-        // $gym->save();
+        $gym->gym_id = $requestData['gym'];
+        $gym->save();
 
         return redirect()->route('gym-managers.index');
     }
@@ -105,9 +106,13 @@ class gymManagerController extends Controller
         );
 
 
+        $gym = gymManager::where('gym_id', $requestData['gym']);
+        $gym->staff_id =  $staffMember->id;
+        $gym->save();
         return redirect()->route('gym-managers.index');
     }
     //-------------------- delete member -------------------------------
+
 
     public function destroy(Request $request)
     {
