@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GymRequest;
-use App\Models\City;
 use App\Models\Gym;
-use App\Models\GymManager;
-use App\Models\Staff;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Staff;
+use App\Models\City;
+use App\Models\GymManager;
+use App\Models\User;
 
 class GymController extends Controller
 {
