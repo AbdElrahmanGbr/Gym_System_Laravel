@@ -122,7 +122,6 @@
 
 <script type="text/javascript">
     $(function() {
-
         @if(Auth::user() - > hasRole('Super-Admin'))
         // Handle City
         $('.cities').on('change', function() {

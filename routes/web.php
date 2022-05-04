@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CityManagerController;
 use App\Http\Controllers\CoachController;
@@ -33,6 +33,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
+Route::get('logout', [LoginController::class, 'logout']);
 
 
 Route::group(['middleware' => ['role_or_permission:city_manager||Super-Admin']], function () {
