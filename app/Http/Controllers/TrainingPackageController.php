@@ -54,7 +54,7 @@ class TrainingPackageController extends Controller
         $gyms = Gym::all();
 
         if (Auth::user()->hasRole('city_manager')) {
-            $city = City::where('staff_id', Auth::user()->id)->first();
+            $city = City::where('user_id', Auth::user()->id)->first();
             $gyms = Gym::where('city_id', $city->id)->get();
         }
 
@@ -80,7 +80,7 @@ class TrainingPackageController extends Controller
         $gyms = Gym::all();
 
         if (Auth::user()->hasRole('city_manager')) {
-            $city = City::where('staff_id', Auth::user()->id)->first();
+            $city = City::where('user_id', Auth::user()->id)->first();
             $gyms = Gym::where('city_id', $city->id)->get();
         }
 

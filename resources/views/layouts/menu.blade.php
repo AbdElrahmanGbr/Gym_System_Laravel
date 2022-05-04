@@ -23,8 +23,7 @@
                 <p>List Users</p>
             </a>
         </li>
-    </ul>123
-    0
+    </ul>
 </li>
 
 <!--Cities Tab-->
@@ -146,6 +145,32 @@
 </li>
 @endif
 
+@if( Auth::user()->hasRole('normal_user'))
+<!--Training Packages Tab-->
+<li class="nav-item has-treeview">
+    <a href=".multi-collapse" class="nav-link bg-secondary " data-toggle="collapsing" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+        <i class="nav-icon fas fa fa-tags"></i>
+        <p>
+            Training Packages
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('training-packages.index') }}" class="nav-link active  multi-collapse" id="multiCollapseExample1">
+                <i class="far fa-circle nav-icon"></i>
+                <p>List Packages</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('stripe.post')}}" class="nav-link active multi-collapse" id="multiCollapseExample2">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Buy a training Package</p>
+            </a>
+        </li>
+    </ul>
+</li>
+@endif
 
 @if(Auth::user()->hasRole('city_manager') || Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('gym_manager'))
 <!--Training Packages Tab-->
@@ -234,7 +259,7 @@
 </li>
 <!--purchases history-->
 <li class="nav-item">
-    <a href="{{ route('purchases.index') }}" class="nav-link {{ Request::is($path) ? 'active' : '' }} bg-white">
+    <a href="{{ route('purchases.index') }}" class="nav-link bg-white">
         <i class="nav-icon  fas fa  fa-credit-card"></i>
         <p>purchases history</p>
     </a>

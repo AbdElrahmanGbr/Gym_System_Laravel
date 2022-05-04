@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
         $gymManager = Role::create(['name' => 'gym_manager']);
         $cityManager = Role::create(['name' => 'city_manager']);
         $coach = Role::create(['name' => 'coach']);
+        $normal_user = Role::create(['name' => 'normal_user']);
 
         //creating permissions
         Permission::create(['name'=>'gyms']);
@@ -34,6 +35,7 @@ class PermissionSeeder extends Seeder
 
        $gymManager->syncPermissions(['gyms','sessions','buy-package']);
        $cityManager->syncPermissions(['gym-managers','buy-package','gyms']);
+       $normal_user->syncPermissions(['buy-package']);
 
 
 

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +20,8 @@ class CityFactory extends Factory
     {
         return [
             'name' => $this->faker->city(),
-            'staff_id' => $this->faker->unique()->randomElement(
-                Staff::role('city_manager')->get()
+            'user_id' => $this->faker->unique()->randomElement(
+                User::role('city_manager')->get()
 
             )['id']
         ];

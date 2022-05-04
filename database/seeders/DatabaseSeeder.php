@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PermissionSeeder::class);
-        $this->call(StaffSeeder::class);
+        $this->call(UserSeeder::class);
+        // $this->call(StaffSeeder::class);
         $this->call(CitySeeder::class);
         $this->call(GymSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(GymManagerSeeder::class);
         $this->call(SessionSeeder::class);
         $this->call(SessionUserSeeder::class);

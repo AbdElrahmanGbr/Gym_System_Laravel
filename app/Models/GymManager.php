@@ -9,7 +9,7 @@ class GymManager extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'staff_id',
+        'user_id',
         'gym_id',
     ];
 }

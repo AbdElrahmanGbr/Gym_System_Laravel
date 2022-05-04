@@ -31,7 +31,7 @@ class CreateAdmin extends Command
     {
         $email = $this->argument('email');
         $password = $this->argument('password');
-        $user = \App\Models\Staff::factory()->create([
+        $user = \App\Models\User::factory()->create([
             'email' => $email,
             'password' => Hash::make($password),
         ]);

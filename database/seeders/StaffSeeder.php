@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -19,17 +20,17 @@ class StaffSeeder extends Seeder
     public function run()
     {
         //Seeding Admin
-        $admin =  Staff::create([
-            'name' => "Admin",
-            'email' => "admin@admin.com",
-            'password' => Hash::make('123456'),
-            'national_id' => rand(1, 20),
-
-        ]);
-        $admin->assignRole('Super-Admin');
+        // $admin =  User::create([
+        //     'name' => "Admin",
+        //     'email' => "admin@admin.com",
+        //     'password' => Hash::make('123456'),
+        //     'national_id' => rand(1, 20),
+        //     'gym_id' => 1,
+        // ]);
+        // $admin->assignRole('Super-Admin');
 
         //Seeding Gym Managers
-        $gymManagers = Staff::factory()->count(15)->create();
+        $gymManagers = User::factory()->count(15)->create();
 
         foreach ($gymManagers as $gymManager) {
 
@@ -37,14 +38,14 @@ class StaffSeeder extends Seeder
         }
 
         //Seeding City Managers
-        $cityManagers = Staff::factory()->count(10)->create();
+        $cityManagers = User::factory()->count(10)->create();
         foreach ($cityManagers as $cityManager) {
 
             $cityManager->assignRole('city_manager');
         }
 
         //Seeding Coaches
-        $coaches = Staff::factory()->count(10)->create();
+        $coaches = User::factory()->count(10)->create();
 
         foreach ($coaches as $coach) {
 

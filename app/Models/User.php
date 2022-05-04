@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'gym_id',
         'email_verified_at'
     ];
+    protected $table = 'users';
 
     /**
      * The attributes that should be hidden for serialization.

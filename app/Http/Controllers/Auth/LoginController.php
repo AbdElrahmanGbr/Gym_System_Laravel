@@ -51,9 +51,9 @@ class LoginController extends Controller
     {
 
         $loginRole = $request->loginRole;
-        $user = Staff::where('email', $request->email)->get()->first();
+        $user = User::where('email', $request->email)->get()->first();
+        // dd($user);
         Auth::login($user);
-        // dd(Auth::user());
         if ($loginRole == 'staff') {
             return redirect()->route('coaches.index');
         } else {

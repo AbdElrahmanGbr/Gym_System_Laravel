@@ -23,7 +23,7 @@ class Gym extends Model
     // Managers
     public function gymManager()
     {
-        return $this->belongsToMany(Staff::class, 'gym_managers', 'gym_id', 'staff_id');
+        return $this->belongsToMany(User::class, 'gym_managers', 'gym_id', 'user_id');
     }
 
     public function city()
@@ -33,7 +33,7 @@ class Gym extends Model
 
     public function gymCoaches()
     {
-        return $this->belongsToMany(Staff::class, 'gym_coaches', 'gym_id', 'staff_id');
+        return $this->belongsToMany(User::class, 'gym_coaches', 'gym_id', 'user_id');
     }
 
     public function trainingPackages()

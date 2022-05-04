@@ -15,7 +15,7 @@ class Staff extends Authenticatable implements BannableContract
     use HasFactory, Notifiable, HasRoles, Bannable;
 
     protected $guard_name = 'web';
-    protected $guard = 'staff';
+    // protected $guard = 'staff';
 
     protected $fillable = [
         'name',
@@ -39,17 +39,17 @@ class Staff extends Authenticatable implements BannableContract
     // Gym Manager
     public function gymManger()
     {
-        return $this->belongsToMany(Gym::class, 'gym_managers', 'staff_id', 'gym_id');
+        return $this->belongsToMany(Gym::class, 'gym_managers', 'user_id', 'gym_id');
     }
 
     public function coachGyms()
     {
-        return $this->belongsToMany(Gym::class, 'gym_coaches', 'staff_id', 'gym_id');
+        return $this->belongsToMany(Gym::class, 'gym_coaches', 'user_id', 'gym_id');
     }
 
     public function coachSessions()
     {
-        return $this->belongsToMany(Session::class, 'session_staff', 'staff_id', 'session_id');
+        return $this->belongsToMany(Session::class, 'session_staff', 'user_id', 'session_id');
     }
     public function session()
     {

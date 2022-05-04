@@ -6,25 +6,25 @@
 @section('content')
 <div class=" mydiv">
 
-    <form method="post" action="{{route('city-managers.update',$staff->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data">
+    <form method="post" action="{{route('city-managers.update',$user->id)}}" class="row d-flex flex-column justify-content-center align-items-center" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="text-center">
             <label for="avatar" class="form-label" role="button">
-                <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $staff->avatar . '')}}" alt="User profile picture">
+                <img class="profile-user-img img-fluid img-circle" src="{{asset('images/'. $user->avatar . '')}}" alt="User profile picture">
             </label>
-            <input type="file" name="avatar" id="avatar" class="d-none" accept="image/x-png,image/gif,image/jpeg" value=" {{$staff->avatar}}" />
+            <input type="file" name="avatar" id="avatar" class="d-none" accept="image/x-png,image/gif,image/jpeg" value=" {{$user->avatar}}" />
         </div>
 
-        <input type="hidden" name="id" value="{{ $staff->id }}">
+        <input type="hidden" name="id" value="{{ $user->id }}">
         <div class="mb-3 col-sm-6">
             <label for="Name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="{{$staff->name}}" />
+            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="{{$user->name}}" />
         </div>
         <div class="mb-3 col-sm-6">
             <label for="Email" class="form-label">Email</label>
-            <input type="email" name="email" id="Email" class="form-control" value="{{$staff->email}}" />
+            <input type="email" name="email" id="Email" class="form-control" value="{{$user->email}}" />
         </div>
         <div class="mb-3 col-sm-6">
             <label for="pass" class="form-label">Old Password</label>
@@ -41,7 +41,7 @@
 
         <div class="mb-3 col-sm-6 ">
             <label for="national_id" class="form-label">National_id</label>
-            <input type="text" name="national_id" id="national_id" class="form-control" value="{{$staff->national_id}}" />
+            <input type="text" name="national_id" id="national_id" class="form-control" value="{{$user->national_id}}" />
         </div>
 
 
@@ -49,7 +49,7 @@
             <label for="city" class="form-label">City</label>
             <select name="city" class="form-control" id="city">
                 @foreach($cities as $city)
-                <option value="{{$city->id}}" {{$city->staff_id == $staff->id ? "selected" : ""}}>{{$city->name}}</option>
+                <option value="{{$city->id}}" {{$city->user_id == $user->id ? "selected" : ""}}>{{$city->name}}</option>
                 @endforeach
             </select>
         </div>
