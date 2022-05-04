@@ -38,7 +38,7 @@ class Session extends Model
 
     public function coaches()
     {
-        return $this->belongsToMany(Staff::class, 'session_staff', 'session_id', 'staff_id');
+        return $this->belongsToMany(User::class, 'session_user', 'session_id', 'user_id');
     }
 
     // public function coaches()
@@ -54,4 +54,3 @@ class Session extends Model
     
     
 }
-

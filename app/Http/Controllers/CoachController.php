@@ -3,23 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CoachController extends Controller
 {
     public function index()
     {
-        $coach = Staff::find(9);
+        $coach = User::find(9);
         return view('coaches.index', ['name' => $coach->name]);
     }
     public function profile()
     {
-        $coach = Staff::find(9);
+        $coach = User::find(9);
         return view('coaches.profile', ['coach' => $coach]);
     }
     public function edit()
     {
-        $coach = Staff::find(9);
+        $coach = User::find(9);
         return view('coaches.edit', ['coach' => $coach]);
     }
     public function update()

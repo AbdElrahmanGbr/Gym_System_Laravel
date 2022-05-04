@@ -24,9 +24,12 @@ return new class extends Migration
             $table->enum('gender', ['Male', 'Female']);
             $table->string("avatar")->default('user_avatar.png');
             $table->integer('remaining_sessions')->default(0);
-            $table->foreignId('gym_id')->constrained()->onDelete('cascade');
-            $table->date('birth_date');
+            // $table->foreignId('gym_id')->constrained()->onDelete('cascade')->default(1);
+            $table->integer('gym_id')->default(1);
+            $table->date('birth_date')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->integer('national_id')->nullable();
+
         });
     }
 

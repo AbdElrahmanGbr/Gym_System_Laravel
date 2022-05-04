@@ -4,40 +4,43 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Session;
-use App\Models\User;
 use App\Models\SessionUser;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\SessionResource;
 
 class RemainingTrainingSessionsController extends Controller
 {
-    public function show()
+    //SHOW ATTENDANCE HISTORY:
+    public function show(Request $request)
     {
-        $user = User::find(10);
+
+        $user = User::where('remember_token', explode(" ", $request->header()['authorization'][0])[1])->get()->first();
         $sessions_info = [];
         $user_session = $user->sessions;
 
         foreach ($user_session as $session) {
             $session_info = [];
-            $session_info['gym_name'] = $user->trainingPackage[0]->trainingPackageGym->name;
+            $session_info['gym_name'] = $session->gym->name;
             $session_info['session_name'] = $session->name;
             $session_info['attendance_date'] = Carbon::create($session->start_at)->toDateString();
             $session_info['attendance_time'] = Carbon::create($session->start_at)->toTimeString();
             array_push($sessions_info, $session_info);
         }
-
-        // return response()->json($sessions_info);
-        return $sessions_info;
+        return response()->json($sessions_info);
     }
 
     //==========================================================================================//
 
-    public function remainingSession()
+    //SHOWING REMAINING SESSIONS:
+    public function remainingSession(Request $request)
     {
-        $user = User::find(2);
+        $user = User::where('remember_token', explode(" ", $request->header()['authorization'][0])[1])->get()->first();
+
         $total_session = $user->trainingPackage;
-        $remaining_sessions = $user->attendance_session;
+        $remaining_sessions = $user->remaining_sessions;
         $total = 0;
         foreach ($total_session as $package) {
             $total += $package->session_number;
@@ -47,11 +50,12 @@ class RemainingTrainingSessionsController extends Controller
 
     //==========================================================================================//
 
-    public function attendSession($id)
+    //SHOWING ATTENDANCE SESSIONS
+    public function attendSession(Request $request, $id)
     {
         $session = Session::find($id);
         $now     = Carbon::now();
-        $user    = User::find(2);
+        $user    = User::where('remember_token', explode(" ", $request->header()['authorization'][0])[1])->get()->first();
 
         $start = $session->start_at;
         $finish = $session->finish_at;
@@ -63,17 +67,25 @@ class RemainingTrainingSessionsController extends Controller
                 'you attended the session before'
             ]);
         }
-        if ($start <= $now && $finish >= $now && $user->attendance_session > 0) {
 
-            SessionUser::create([
-                'session_id' => $session->id,
-                'user_id' => $user->id
-            ]);
-            $user->update([
-                'attendance_session' => ($user->attendance_session - 1)
-            ]);
+        if ($user->remaining_sessions > 0) {
 
-            return ['SuccessMessage' => 'you can attend training session'];
+            if ($start <= $now && $finish >= $now) {
+
+                SessionUser::create([
+                    'session_id' => $session->id,
+                    'user_id' => $user->id,
+                ]);
+                $user->update([
+                    'remaining_sessions' => ($user->remaining_sessions - 1)
+                ]);
+
+                return ['SuccessMessage' => 'you can attend training session'];
+            } else {
+                throw ValidationException::withMessages([
+                    "Session is out of date"
+                ]);
+            }
         } else {
 
             throw ValidationException::withMessages([

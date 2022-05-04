@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Session;
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class SessionStaffFactory extends Factory {
     public function definition() {
         return [
             'session_id' => $this->faker->randomElement(Session::all())['id'],
-            'staff_id' => $this->faker->randomElement(Staff::role('coach')->get())['id']
+            'user_id' => $this->faker->randomElement(User::role('coach')->get())['id']
         ];
     }
 }

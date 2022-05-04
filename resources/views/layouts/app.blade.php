@@ -4,32 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
-<<<<<<< HEAD
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('starter_script')
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.js"></script>
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     @yield('styles')
-=======
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-          crossorigin="anonymous"/>
-
+    @yield('third_party_stylesheets')
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     @yield('third_party_stylesheets')
->>>>>>> d327182f648f8d48c4f933b4a1d42f2c5853cdf4
-
+    @yield('styles')
     @stack('page_css')
 </head>
 
-<<<<<<< HEAD
-<body class="hold-transition sidebar-mini layout-fixed   bg-dark text-white">
+<body class="hold-transition sidebar-mini layout-fixed  bg-dark text-white">
     <div class="wrapper">
         <!-- Main Header -->
         <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
@@ -43,16 +37,14 @@
             <ul class="navbar-nav ml-auto ">
                 <li class="nav-item dropdown user-menu ">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="https://assets.infyom.com/logo/blue_logo_150x150.png" class="user-image img-circle elevation-2" alt="User Image">
-                        <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/User_icon_2.svg" class="user-image img-circle elevation-2" alt="User fasfsafasfsafsafasf">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <!-- User image -->
                         <li class="user-header bg-primary">
-                            <img src="https://assets.infyom.com/logo/blue_logo_150x150.png" class="img-circle elevation-2" alt="User Image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/User_icon_2.svg" class="img-circle elevation-2" alt="User Image">
                             <p>
-                                {{ Auth::user()->name }}
-                                <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small>
+
                             </p>
                         </li>
                         <!-- Menu Footer-->
@@ -69,14 +61,12 @@
                 </li>
             </ul>
         </nav>
-
         <!-- Left side column. contains the logo and sidebar -->
         @include('layouts.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper con ">
-
-            <main>
+        <div class="content-wrapper con">
+            <section class="content">
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -87,25 +77,104 @@
                 </div>
                 @endif
                 @yield('content')
-            </main>
 
         </div>
 
         <!-- Main Footer -->
         <footer class="main-footer bg-dark text-white">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.5
+                <b>Version</b> 3.2.0
             </div>
             <strong>Copyright &copy; 2014-2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
             reserved.
         </footer>
     </div>
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script>
+        // Handle Selected Tags
+        function handleSelectedTag(element, optionClass) {
+            document.querySelector(`.${optionClass}`)?.classList.remove('d-none');
+            element.parentElement.remove();
+        }
+
+        // Get Selected Gyms
+        function getSelectedGyms(elementClass) {
+            let selectedGyms = [];
+            let tags = document.querySelectorAll(elementClass);
+            for (let tag of tags) {
+                selectedGyms.push(+tag.dataset.tag);
+            }
+            return selectedGyms;
+        }
+
+        // Generate Input Hidden for Tags Id
+        function generateInputSaveTagsID(event, elementClass, inputName) {
+            let selectedGyms = getSelectedGyms(`${elementClass} .tag`);
+            selectedGyms.forEach(gym => {
+                let inputGymId = document.createElement('input');
+                inputGymId.setAttribute('type', 'hidden');
+                inputGymId.setAttribute('name', `${inputName}[]`);
+                inputGymId.setAttribute('value', gym);
+                event.target.append(inputGymId);
+            })
+        }
+
+        // Add Tags for mulitpe Select options
+        function tags(e, tagsContainer) {
+
+            let option = e.target.options[e.target.selectedIndex];
+            let parentSpan = document.createElement('span');
+            let spanTag = document.createElement('span');
+            let textTag = document.createTextNode(option.text + ' ');
+            let deleteTag = document.createElement('span');
+            let deleteText = document.createTextNode(' X');
+            deleteTag.classList.add()
+            deleteTag.addEventListener('click', function() {
+                this.parentElement.remove();
+                option.classList.remove('d-none');
+            });
+            parentSpan.setAttribute('data-tag', option.value);
+            parentSpan.classList.add('tag', 'bg-dark', 'text-white', 'px-3', 'py-2', 'rounded-pill', 'mt-2', 'mr-2');
+            deleteTag.classList.add('text-danger');
+            deleteTag.setAttribute('role', 'button');
+            spanTag.append(textTag);
+            deleteTag.append(deleteText);
+
+            parentSpan.append(spanTag)
+            parentSpan.append(deleteTag);
+            document.querySelector(tagsContainer).append(parentSpan);
+
+            option.classList.add('d-none');
+
+            e.target.options[0].selected = true;
+        }
+
+        // Interactive Upload Image
+        function previewImage(preview) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                if (reader.readyState == 2) {
+                    preview.src = reader.result;
+                }
+
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
     @yield('javascripts')
-=======
+    @yield('script')
+
+    @yield('third_party_scripts')
+
+
+    @stack('page_scripts')
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <!-- Main Header -->
@@ -176,7 +245,7 @@
 @yield('third_party_stylesheets')
 
 @stack('page_scripts')
->>>>>>> d327182f648f8d48c4f933b4a1d42f2c5853cdf4
+
 </body>
 
 </html>

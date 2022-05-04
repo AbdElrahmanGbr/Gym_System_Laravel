@@ -46,7 +46,7 @@ class CityController extends Controller
             ],
             [
                 'name' => $request->name,
-                'staff_id' => 1,
+                'user_id' => 1,
 
             ]
         );

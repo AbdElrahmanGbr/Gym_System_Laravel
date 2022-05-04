@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Gym;
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,8 +21,8 @@ class GymCoachFactory extends Factory
     {
         return [
             'gym_id' => $this->faker->randomElement(Gym::all())['id'],
-            'staff_id' => $this->faker->randomElement(
-                Staff::role('coach')->get()
+            'user_id' => $this->faker->randomElement(
+                User::role('coach')->get()
 
             )['id']
         ];
