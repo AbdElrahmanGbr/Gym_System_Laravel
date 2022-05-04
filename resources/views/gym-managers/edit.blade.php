@@ -21,7 +21,7 @@
   </div>
   <div class="mb-3">
     <label for="confirm" class="form-label">Confrim Password</label>
-    <input type="password" name="confirm" id="confirm" class="form-control"/>
+    <input type="password" name="confirm" id="confirm" class="form-control" />
   </div>
   <div class="mb-3">
     <label for="avatar" class="form-label">Avatar</label>
@@ -63,10 +63,8 @@
   src="https://code.jquery.com/jquery-3.6.0.js"
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"></script>
-
 <script>
   $(document).ready(function() {
-
     $("#city").change(function(){
             var cityID = $(this).val();
 

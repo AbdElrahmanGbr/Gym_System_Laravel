@@ -9,7 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-
+use App\Http\Resources\SessionResource;
 
 class RemainingTrainingSessionsController extends Controller
 {

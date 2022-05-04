@@ -9,8 +9,9 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\gymManagerController;
 use App\Http\Controllers\TrainingPackageController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CoachController;
 
 
 /*
