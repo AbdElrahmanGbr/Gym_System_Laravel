@@ -5,7 +5,11 @@ try {
 } catch (e) {}
 
 /**
+<<<<<<< HEAD
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+=======
+ We'll load jQuery and the Bootstrap jQuery plugin which provides support
+>>>>>>> d327182f648f8d48c4f933b4a1d42f2c5853cdf4
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */

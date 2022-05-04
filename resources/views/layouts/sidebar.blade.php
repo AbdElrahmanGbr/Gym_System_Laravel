@@ -2,8 +2,9 @@
     <a href="{{ route('home') }}" class="brand-link">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/User_icon_2.svg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">Gyms System</span>
+        <img src="https://assets.infyom.com/logo/blue_logo_150x150.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
-
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -11,5 +12,4 @@
             </ul>
         </nav>
     </div>
-
 </aside>

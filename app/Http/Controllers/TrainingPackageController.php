@@ -15,7 +15,6 @@ class TrainingPackageController extends Controller
     public function index()
     {
         $trainingPackages = TrainingPackage::with('trainingPackageGym')->get();
-
         if (Auth::user()->hasRole('gym_manager')) {
             $gymIdManager = Auth::user()->gymManger->first()->id;
             $trainingPackages = TrainingPackage::with('trainingPackageGym')->where('gym_id', $gymIdManager)->get();
