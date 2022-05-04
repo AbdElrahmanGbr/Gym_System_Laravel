@@ -7,13 +7,14 @@ use App\Models\Staff;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
+use App\Models\User;
 
 class gymManagerController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(Staff::where('role', 'gym_manager')->get())
+            return datatables()->of(User::where('role', 'gym_manager')->get())
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('gym-managers.edit', $data->id) . '" class="btn btn-info btn-sm mx-2">Edit</a>';
                     $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
@@ -23,12 +24,12 @@ class gymManagerController extends Controller
         }
         return view('gym-managers.index');
     }
-    //--------------------------- edit staff member -----------------------
-    public function edit($staffId)
+    //--------------------------- edit User member -----------------------
+    public function edit($userId)
     {
 
-        $staff = Staff::find($staffId);
-        $gymId = gymManager::where('staff_id', $staffId)->first()->gym_id;
+        $user = User::find($userId);
+        $gymId = gymManager::where('user_id', $userId)->first()->gym_id;
         //dd($gymId);
         //$gymId = $gymMan->gym_id;
         $gym = Gym::where('id', $gymId)->first();
@@ -36,17 +37,17 @@ class gymManagerController extends Controller
         $cities = City::all();
         $gyms = Gym::all();
         return view('gym-managers.edit', [
-            'staff' => $staff,
+            'user' => $user,
             'gyms' => $gyms,
             'cities' => $cities,
             'gym' => $gym
 
         ]);
     }
-    public function update($staffId)
+    public function update($userId)
     {
         $requestData = request()->all();
-        $post = Staff::find($staffId)->update([
+        $post = User::find($userId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
@@ -56,7 +57,7 @@ class gymManagerController extends Controller
             'role' => "gym_manager",
         ]);
 
-        $gym = gymManager::where('staff_id', $staffId)->update([
+        $gym = gymManager::where('user_id', $userId)->update([
             'gym_id' => $requestData['gym']
         ]);
 
@@ -82,7 +83,7 @@ class gymManagerController extends Controller
     {
         $requestData = request()->all();
 
-        Staff::create([
+        User::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => $requestData['password'],
@@ -91,13 +92,13 @@ class gymManagerController extends Controller
             'is_baned' => 0,
             'role' => "gym_manager",
         ]);
-        $staffMember = Staff::where('name', $requestData['name'])->first();
+        $userMember = User::where('name', $requestData['name'])->first();
 
 
 
         gymManager::Create(
             [
-                'staff_id' => $staffMember->id,
+                'user_id' => $userMember->id,
 
 
                 'gym_id' => $requestData['gym']
@@ -112,7 +113,7 @@ class gymManagerController extends Controller
     public function destroy(Request $request)
     {
 
-        $member = Staff::where('id', $request->id)->delete();
+        $member = User::where('id', $request->id)->delete();
         return Response()->json($member);
     }
 }
