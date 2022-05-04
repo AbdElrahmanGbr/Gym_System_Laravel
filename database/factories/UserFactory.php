@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'password' => Hash::make(123456),
             'remember_token' => Str::random(10),
             'gender' => $gender,
-            'gym_id' => $this->faker->randomElement(Gym::all())['id'],
+            'gym_id' => 1,
             'birth_date' => $this->faker->dateTimeThisYear($max = 'now'),
         ];
     }

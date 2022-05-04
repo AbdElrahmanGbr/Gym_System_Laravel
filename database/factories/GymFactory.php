@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\City;
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,7 @@ class GymFactory extends Factory
             'image' => "1646764729.jpg",
             'city_id' =>  $city['id'],
             'created_by' =>
-            Staff::role('city_manager')->where('id', $city->staff_id)->first()['name']
+            User::role('city_manager')->where('id', $city->user_id)->first()['name']
 
         ];
     }

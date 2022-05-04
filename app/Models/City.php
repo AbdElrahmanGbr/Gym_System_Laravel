@@ -11,7 +11,7 @@ class City extends Model
 
     protected $fillable = [
         'name',
-        'staff_id' //city_manager_id
+        'user_id' //city_manager_id
     ];
 
     public function gyms()
@@ -21,6 +21,6 @@ class City extends Model
 
     public function cityManager()
     {
-        return $this->belongsTo(Staff::class, 'staff_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

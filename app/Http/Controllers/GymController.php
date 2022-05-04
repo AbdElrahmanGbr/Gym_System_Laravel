@@ -24,10 +24,10 @@ class GymController extends Controller
     //----------------------create--------------------//
     public function create()
     {
-        $staff = Staff::where("role", "gym_manager")->get();                            //to return array
+        $user = User::where("role", "gym_manager")->get();                            //to return array
         $cities = City::all();
         return view('gyms.create', [
-            'staff' => $staff,
+            'user' => $user,
             'cities' => $cities
         ]);
     }
@@ -43,8 +43,10 @@ class GymController extends Controller
     //----------------------store--------------------//
     public function store(GymRequest $request)
     {
-        $gymData = request()->all();
+        $gymData = request()->validated();
         $fileName = $this->getImageData($request);
+
+
         $newGym = Gym::create([
             'name' => $gymData['name'],
             'revenue' => 0,
@@ -53,7 +55,7 @@ class GymController extends Controller
         ]);
 
         GymManager::create([
-            "staff_id" => $gymData['staff_id'],
+            "user_id" => $gymData['user_id'],
             "gym_id" => $newGym->id
         ]);
         return redirect()->route("gyms.index");
@@ -73,11 +75,11 @@ class GymController extends Controller
     public function edit($id)
     {
         $gym = Gym::find($id);
-        $staff = Staff::where("role", "gym_manager")->get();
+        $user = User::where("role", "gym_manager")->get();
         $cities = City::all();
         return view('gyms.edit', [
             'gym' => $gym,
-            'staff' => $staff,
+            'user' => $user,
             'cities' => $cities
         ]);
     }
@@ -93,7 +95,7 @@ class GymController extends Controller
         ];
         $updatedGymManagerData = [
 
-            "staff_id" => $request['staff_id']
+            "user_id" => $request['user_id']
         ];
         Gym::where('id', $gym->id)->update($updatedGymData);
         GymManager::where('gym_id', $gym->id)->update($updatedGymManagerData);

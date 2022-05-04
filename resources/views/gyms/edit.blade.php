@@ -18,8 +18,8 @@
             </div>
             <div class="mb-3">
                 <label for="manager" class="form-label">Choose Manager</label>
-                <select class="form-select" name="staff_id">
-                    @foreach ($staff as $manager )
+                <select class="form-select" name="user_id">
+                    @foreach ($user as $manager )
                     <option value="{{$manager->id}}">{{$manager->name}}</option>
                     @endforeach
                 </select>

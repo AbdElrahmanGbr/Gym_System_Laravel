@@ -46,8 +46,9 @@ class UserController extends Controller
             'gender' => 'required',
             'password' => 'required|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required',
-            // 'date_of_birth'=>'required',
-            // 'avatar'=>'required'
+            'gym_id' => 'required',
+            'birth_date' => 'required',
+            'avatar' => 'required'
         ]);
 
         $data = $request->all();

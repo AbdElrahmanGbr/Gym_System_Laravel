@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->foreignId('staff_id')->nullable()->unique()->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->unique()->onDelete('set null');
         });
     }
 

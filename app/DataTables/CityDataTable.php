@@ -61,7 +61,7 @@ class CityDataTable extends DataTable
             'created_at',
             'updated_at',
             'name',
-            'staffs_id'
+            'users_id'
         ];
     }
 
