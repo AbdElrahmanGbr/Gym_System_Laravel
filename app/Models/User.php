@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Bannable;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +24,13 @@ class User extends Authenticatable
         'email',
         'password',
         'gender',
+        'remaining_sessions',
+        'avatar',
+        'birth_date',
+        'gym_id',
+        'email_verified_at'
     ];
+    protected $table = 'users';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +50,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sessions()
+    {
+        return $this->belongsToMany(Session::class, 'session_user', 'user_id', 'session_id');
+    }
+
+    public function trainingPackage()
+    {
+        return $this->belongsToMany(TrainingPackage::class, 'user_training_packages', 'user_id', 'training_package_id');
+    }
+    public function session()
+    {
+        return $this->belongsToMany(Session::class);
+    }
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
+    }
 }

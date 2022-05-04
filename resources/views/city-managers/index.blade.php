@@ -22,76 +22,82 @@
         <tbody>
         </tbody>
     </table>
-    </div>
+</div>
 
 @endsection
 @section('javascripts')
 
-    <script>
-        $(document).ready( function () {
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
-            ajax:{
+            ajax: {
                 url: "{{ route('city-managers.index') }}"
             },
-            columns:[
-                {
-                    data:'id',
-                    name:'id',
+            columns: [{
+                    data: 'id',
+                    name: 'id',
                 },
                 {
-                    data:'avatar',
-                    name:'avatar',
-                    render:function(data,type,full,meta)
-                    {
-                        return "<img src='images/"+data+"'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    data: 'avatar',
+                    name: 'avatar',
+                    render: function(data, type, full, meta) {
+                        return "<img src='images/" + data + "'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
                     },
-                    orderable:false
+                    orderable: false
                 },
                 {
-                    data:'name',
-                    name:'name',
+                    data: 'name',
+                    name: 'name',
                 },
                 {
-                    data:'email',
-                    name:'email',
+                    data: 'email',
+                    name: 'email',
                 },
                 {
-                    data:'national_id',
-                    name:'national_id',
+                    data: 'national_id',
+                    name: 'national_id',
                 },
                 {
-                    data:'city',
-                    name:'city',
+                    data: 'city',
+                    name: 'city',
                 },
-               
+
                 {
-                    data:'action',
-                    name:'action',
-                    orderable:false,
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
                 },
             ]
         });
-    } );
-    function deleteFunc(id){
+    });
+
+    function deleteFunc(id) {
         if (confirm("Delete Record?") == true) {
-        var id = id;
-         // ajax
-        $.ajax({
-           type:"POST",
-           url: "{{ url('destroy-city-manager') }}",
-           data: { id: id },
-           dataType: 'json',
-           success: function(res){
-            $('#table_id').DataTable().ajax.reload();
-              },
-            error:function(){ 
-            alert("Failed");
+            var id = id;
+            // ajax
+            $.ajax({
+                type: "POST",
+                url: "{{ url('destroy-city-manager') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#table_id').DataTable().ajax.reload();
+                },
+                error: function() {
+                    alert("Failed");
+                }
+            });
+
         }
-         });
-         
-    }}
-    </script>
+    }
+</script>
 @endsection

@@ -12,6 +12,33 @@ class Gym extends Model
         'name',
         'image',
         'revenue',
-        'city_id',   
+        'city_id',
+        'created_by'
     ];
+
+    // Managers
+    public function gymManager()
+    {
+        return $this->belongsToMany(User::class, 'gym_managers', 'gym_id', 'user_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function gymCoaches()
+    {
+        return $this->belongsToMany(User::class, 'gym_coaches', 'gym_id', 'user_id');
+    }
+
+    public function trainingPackages()
+    {
+        return $this->hasMany(TrainingPackage::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

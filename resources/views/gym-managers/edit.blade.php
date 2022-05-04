@@ -4,32 +4,32 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<form method="post" action="{{route('gym-managers.update',$staff->id)}}" class="mt-5">
+<form method="post" action="{{route('gym-managers.update',$user->id)}}" class="mt-5">
   @csrf
   @method('PUT')
   <div class="mb-3">
     <label for="Name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="{{$staff->name}}"/>
+    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="{{$user->name}}"/>
   </div>
   <div class="mb-3">
     <label for="Email" class="form-label">Email</label>
-    <input type="email" name="email" id="Email" class="form-control" value="{{$staff->email}}"/>
+    <input type="email" name="email" id="Email" class="form-control" value="{{$user->email}}"/>
   </div>
   <div class="mb-3">
     <label for="pass" class="form-label">Password</label>
-    <input type="password" name="password" id="password" class="form-control" value="{{$staff->password}}"/>
+    <input type="password" name="password" id="password" class="form-control" value="{{$user->password}}"/>
   </div>
   <div class="mb-3">
     <label for="confirm" class="form-label">Confrim Password</label>
-    <input type="password" name="confirm" id="confirm" class="form-control"/>
+    <input type="password" name="confirm" id="confirm" class="form-control" />
   </div>
   <div class="mb-3">
     <label for="avatar" class="form-label">Avatar</label>
-    <input type="file" name="avatar" id="avatar" class="form-control" value="{{$staff->avatar}}" />
+    <input type="file" name="avatar" id="avatar" class="form-control" value="{{$user->avatar}}" />
   </div>
   <div class="mb-3 ">
     <label for="national_id" class="form-label">National_id</label>
-    <input type="text" name="national_id" id="national_id" class="form-control" value="{{$staff->national_id}}"/>
+    <input type="text" name="national_id" id="national_id" class="form-control" value="{{$user->national_id}}"/>
   </div>
 
 
@@ -63,10 +63,8 @@
   src="https://code.jquery.com/jquery-3.6.0.js"
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"></script>
-
 <script>
   $(document).ready(function() {
-
     $("#city").change(function(){
             var cityID = $(this).val();
 

@@ -8,8 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class City extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
-        'staffs_id',
+        'user_id' //city_manager_id
     ];
+
+    public function gyms()
+    {
+        return $this->hasMany(Gym::class);
+    }
+
+    public function cityManager()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
