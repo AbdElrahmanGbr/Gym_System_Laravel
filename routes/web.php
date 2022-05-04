@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\gymManagerController;
 use App\Http\Controllers\TrainingPackageController;
-use App\Http\Controllers\CoachController;
 
 
 /*
