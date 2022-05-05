@@ -57,6 +57,8 @@ Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])-
 Route::controller(AuthController::class)->group(function () {
     Route::post('signin', 'signin');
     Route::post('signup', 'signup');
+    Route::get('logout', 'logout')->middleware('auth:sanctum');
+
  
 });
 Route::post('/sanctum/token', function (Request $request){
