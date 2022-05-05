@@ -5,6 +5,23 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RemainingTrainingSessionsController;
 
 use App\Http\Controllers\Api\UserController;
+
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Api\SessionsController;
+use App\Http\Controllers\Api\PackagesController;
+use App\Http\Controllers\Api\AuthController;
+use App\Models\User;
+use App\Models\TrainingSession;
+use App\Models\TrainingPackage;
+
+
+use App\Http\Controllers\Api\EmailVerificationController;
+use App\Http\Controllers\Auth\VerificationController;
+use Illuminate\Support\Facades\Auth;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,7 +55,24 @@ Route::post('email/verification-notification', [EmailVerificationController::cla
 Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
 Route::controller(AuthController::class)->group(function () {
- 
+    Route::post('signin', 'signin');
     Route::post('signup', 'signup');
  
+});
+Route::post('/sanctum/token', function (Request $request){
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+        'device_name' => 'required',
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (! $user || ! Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+
+    return $user->createToken($request->device_name)->plainTextToken;
 });
