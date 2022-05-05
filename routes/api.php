@@ -31,4 +31,8 @@ Route::group(
 
         Route::post('training-sessions/{id}/attend', [RemainingTrainingSessionsController::class, 'attendSession']);
     }
+    
 );
+Auth::routes(['verify'=>true]);
+Route::post('email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('auth:sanctum');
+Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
