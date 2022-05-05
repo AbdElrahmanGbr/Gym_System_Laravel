@@ -36,3 +36,9 @@ Route::group(
 Auth::routes(['verify'=>true]);
 Route::post('email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('auth:sanctum');
 Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+
+Route::controller(AuthController::class)->group(function () {
+ 
+    Route::post('signup', 'signup');
+ 
+});
