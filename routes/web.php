@@ -13,6 +13,7 @@ use App\Http\Controllers\GymManagerController;
 use App\Http\Controllers\TrainingPackageController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\PurchaseController;
 
 
 /*
