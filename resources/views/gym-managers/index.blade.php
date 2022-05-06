@@ -4,102 +4,111 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
-<br>
-<div class="d-flex justify-content-center mb-2">
-    <a href="{{route('gym-managers.create')}}" class="btn btn-success">Add New Manager </a>
-</div>
+<div class="text-center mydiv">
+    <a href="{{route('gym-managers.create')}}" class="btn btn-success btn-lg my-2">Add New Manager </a>
+    <table id="table_id" class="table table-responsive-md cell-border compact stripe table-dark my-4 text-dark">
+        <thead>
+            <tr class="text-white">
+                <th>id</th>
+                <th>Avatar</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>National_ID</th>
+                <th>Gym-City</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </div>
 
-
-<table id="table_id" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Avatar</th>
-            <th>National_ID</th>
-            <th>Is_Baned</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
 @endsection
-@section('third_party_scripts')
-<script src="{{ mix('js/app.js') }}" defer></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js" defer></script>
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+@section('javascripts')
+    <script>
+        $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: "{{ route('gym-managers.index') }}"
             },
-            columns: [{
-                    data: 'id',
-                    name: 'id',
+            columns:[
+                {
+                    data:'id',
+                    name:'id',
                 },
                 {
-                    data: 'name',
-                    name: 'name',
-                },
-                {
-                    data: 'email',
-                    name: 'email',
-                },
-                {
-                    data: 'avatar',
-                    name: 'avatar',
-                    render: function(data, type, full, meta) {
-                        return "<img src=" + data + " width='70' class='img-thumbnail' />";
+                    data:'avatar',
+                    name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src='images/"+data+"' width='60' style='border-radius:50%;' class='img-thumbnail'  />";
                     },
-                    orderable: false
+                    orderable:false
                 },
                 {
-                    data: 'national_id',
-                    name: 'national_id',
+                    data:'name',
+                    name:'name',
                 },
                 {
-                    data: "is_baned",
-                    name: "is_baned",
+                    data:'email',
+                    name:'email',
                 },
                 {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
+                    data:'national_id',
+                    name:'national_id',
+                },
+                {
+                    data:'gym-city',
+                    name:'gym-city',
+                },
+
+
+                {
+                    data:'action',
+                    name:'action',
+                    orderable:false,
                 },
             ]
         });
-    });
-
-    function deleteFunc(id) {
+    } );
+    function deleteFunc(id){
         if (confirm("Delete Record?") == true) {
-            var id = id;
-            // ajax
-            $.ajax({
-                type: "POST",
-                url: "{{ url('destroy-gym-manager') }}",
-                data: {
-                    id: id
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $('#table_id').DataTable().ajax.reload();
-                },
-                error: function() {
-                    alert("Failed");
-                }
-            });
-
+        var id = id;
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ url('destroy-gym-manager') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){
+            alert("Failed");
         }
-    }
-</script>
+         });
+
+    }}
+    function ban(id){
+        if (confirm("Ban this member?") == true) {
+        var id = id;
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ url('ban-gym-manager') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){
+            alert("Failed");
+        }
+         });
+
+    }}
+    </script>
 @endsection
