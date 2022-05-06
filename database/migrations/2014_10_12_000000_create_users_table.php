@@ -29,7 +29,6 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->integer('national_id')->nullable();
-
         });
     }
 
