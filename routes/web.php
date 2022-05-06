@@ -9,8 +9,9 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\gymManagerController;
+use App\Http\Controllers\GymManagerController;
 use App\Http\Controllers\TrainingPackageController;
+use App\Http\Controllers\AttendanceController;
 
 
 /*
@@ -152,3 +153,6 @@ Route::PUT("coach-password/{id}", [CoachController::class, 'passwordUpdate'])->n
 //-------------------------- Users Routes --------------------------------
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::post('destroy-user', [UserController::class, 'destroy'])->name('users.destroy');
+
+ /* ======================= Attendance Routes ========================= */
+ Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendances.index');
