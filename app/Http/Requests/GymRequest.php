@@ -27,7 +27,7 @@ class GymRequest extends FormRequest
             'name' => ['required', 'min:4', 'max:15'],
             'image' => ['required', 'image', 'mimes:jpg,png,jpeg,gif,svg', 'max:1000'],
             'city_id' => ['required'],
-            'user_id' => ['required'],
+
         ];
     }
 
