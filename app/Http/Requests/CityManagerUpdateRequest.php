@@ -23,12 +23,12 @@ class CityManagerUpdateRequest extends FormRequest {
         $id = request()->all()['id'] ?? "";
         return [
             'name' => ['required', 'min:4', 'max:15'],
-            'email' => 'required|email|unique:staff,email,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'old_password' => ['nullable'],
             'password' => ['min:6', 'max:20', 'nullable'],
             'confirm' => ['same:password', 'nullable'],
             'avatar' => ['image', 'mimes:jpg,png,jpeg'],
-            'national_id' => 'required|numeric|digits:10|unique:staff,national_id,' . $id,
+            'national_id' => 'required|numeric|digits:10|unique:users,national_id,' . $id,
             'city' => ['required'],
         ];
     }
