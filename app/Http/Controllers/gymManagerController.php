@@ -9,7 +9,7 @@ use App\Models\Gym;
 use App\Models\GymManager;
 use App\Models\User;
 
-class gymManagerController extends Controller
+class GymManagerController extends Controller
 {
     public function index()
     {
