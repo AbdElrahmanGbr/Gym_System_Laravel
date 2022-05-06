@@ -51,11 +51,12 @@ class gymManagerController extends Controller
         return view('gym-managers.index');
     }
 
+
      //--------------------------- edit user member -----------------------
      public function edit($user_id) {
 
         $user_id = User::find($user_id);
-        $gymId = gymManager::where('user_id', $user_id)->first()->gym_id;
+        $gymId = GymManager::where('user_id', $user_id)->first()->gym_id;
         $gym = Gym::find($gymId);
         $cityGyms = $gym->city->gyms;
         $cities = City::all();
