@@ -26,3 +26,77 @@
         </tbody>
     </table>
 </div>
+@endsection
+@section('javascripts') 
+    <script>
+        $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $('#table_id').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax:{
+                url: "{{ route('purchases.index') }}"
+            },
+            columns:[
+
+                {
+                    data:'id',
+                    name:'id',
+                },   
+                {
+                    data:'userName',
+                    name:'userName',
+                },
+                {
+                    data:'email',
+                    name:'email',
+                },
+                
+                {
+                    data:'packageName',
+                    name:'packageName',
+                },
+                {
+                    data:'price',
+                    name:'price',
+                    render: function(data) {return `$${data * 0.01}`}
+                },
+                @can('gym-managers')
+                {
+                    data:'gymName',
+                    name:'gymName',
+                },
+                @endcan
+                @role('Super-Admin')
+                {
+                    data:'cityName',
+                    name:'cityName',
+                },
+                @endrole
+                {
+                    data:'action',
+                    name:'action',
+                    orderable:false,
+                },
+            ]
+        });
+    } );
+    function deleteFunc(id){
+        if (confirm("Delete Record?") == true) {
+        var id = id;
+        $.ajax({
+           type:"POST",
+           url: "{{ url('destroy-purchase') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("Cannot delete this record");
+        }
+         });
+         
+    }}
+    </script>
+@endsection
