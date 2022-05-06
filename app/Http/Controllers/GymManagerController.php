@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 class GymManagerController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $gymManagers = User::role('gym_manager')->get();
 
         if (Auth::user()->hasRole('city_manager')) {
@@ -37,14 +38,12 @@ class GymManagerController extends Controller
                 })
                 ->addColumn('gym-city', function ($data) {
                     $gymManage = GymManager::where('user_id', $data->id)->first();
-                    if(isset($gymManage))
-                    {
-                    $gym = Gym::find($gymManage->gym_id);
-                    $city = City::find($gym->city_id);
-                    return $gym->name . '-' . $city->name;
+                    if (isset($gymManage)) {
+                        $gym = Gym::find($gymManage->gym_id);
+                        $city = City::find($gym->city_id);
+                        return $gym->name . '-' . $city->name;
                     }
                     return "None";
-
                 })
                 ->rawColumns(['action'])->make(true);
         }
@@ -52,22 +51,23 @@ class GymManagerController extends Controller
     }
 
 
-     //--------------------------- edit user member -----------------------
-     public function edit($user_id) {
+    //--------------------------- edit user member -----------------------
+    public function edit($userId)
+    {
 
-        $user_id = User::find($user_id);
-        $gymId = GymManager::where('user_id', $user_id)->first()->gym_id;
+        $user = User::find($userId);
+        $gymId = GymManager::where('user_id', $userId)->first()->gym_id;
         $gym = Gym::find($gymId);
         $cityGyms = $gym->city->gyms;
         $cities = City::all();
         $gyms = Gym::all();
 
         return view('gym-managers.edit', [
-            'user_id' => $user_id,
+            'user' => $user,
             'gyms' => $gyms,
             'cities' => $cities,
             'gym' => $gym,
-            'cityGyms' => $cityGyms
+            'cityGyms' => $cityGyms,
 
         ]);
     }
@@ -137,15 +137,15 @@ class GymManagerController extends Controller
     }
     //-------------------- delete member -------------------------------
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
 
         $member = User::where('id', $request->id)->delete();
         return Response()->json($member);
     }
-    public function ban(Request $request) {
-
-        $member = User::find($request->id);
-        $ban = $member->isBanned() ? $member->unban() : $member->ban();
-        return Response()->json($ban);
+    public function ban(Request $request)
+    {
+e4bbd4fcce72
+n($ban);
     }
 }
