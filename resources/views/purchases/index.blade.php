@@ -81,5 +81,22 @@
             ]
         });
     } );
+    function deleteFunc(id){
+        if (confirm("Delete Record?") == true) {
+        var id = id;
+        $.ajax({
+           type:"POST",
+           url: "{{ url('destroy-purchase') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("Cannot delete this record");
+        }
+         });
+         
+    }}
     </script>
 @endsection
