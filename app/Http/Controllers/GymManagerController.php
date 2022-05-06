@@ -145,9 +145,7 @@ class GymManagerController extends Controller
     }
     public function ban(Request $request)
     {
-
-        $member = User::find($request->id);
-        $ban = $member->isBanned() ? $member->unban() : $member->ban();
-        return Response()->json($ban);
+e4bbd4fcce72
+n($ban);
     }
 }
