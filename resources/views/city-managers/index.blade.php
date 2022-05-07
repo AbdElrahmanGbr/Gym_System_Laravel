@@ -14,7 +14,6 @@
                 <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>National_ID</th>
                 <th>City</th>
                 <th></th>
             </tr>
@@ -60,10 +59,7 @@
                     data: 'email',
                     name: 'email',
                 },
-                {
-                    data: 'national_id',
-                    name: 'national_id',
-                },
+           
                 {
                     data: 'city',
                     name: 'city',
