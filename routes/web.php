@@ -33,7 +33,7 @@ Route::GET('/', function () {
 });
 
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('logout', [LoginController::class, 'logout']);
 

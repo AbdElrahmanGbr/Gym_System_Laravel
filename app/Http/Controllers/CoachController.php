@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Staff;
+use App\Models\User;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymCoach;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Redirect;
 class coachController extends Controller {
     public function index() {
         if (request()->ajax()) {
-            return datatables()->of(Staff::role('coach')->get())
+            return datatables()->of(User::role('coach')->get())
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('coaches.show', $data->id) . '" class="btn btn-info btn-sm mx-2">Show</a>';
                     $button .= '<a href="javascript:void(0);" onClick = "deleteFunc(' . $data->id . ')"class="btn btn-danger btn-sm mx-2">Delete</a>';
@@ -28,14 +28,14 @@ class coachController extends Controller {
         }
         return view('coaches.index');
     }
-    //--------------------------- edit staff member -----------------------
-    public function edit($staffId) {
+    //--------------------------- edit user member -----------------------
+    public function edit($userId) {
         $cities = City::all();
-        $staff = Staff::find($staffId);
+        $user = User::find($userId);
 
         return view('coaches.edit', [
             'cities' => $cities,
-            'coach' => $staff
+            'coach' => $user
         ]);
 
 
@@ -43,7 +43,7 @@ class coachController extends Controller {
         // dd('-------------------------------');
 
 
-        $coachedGyms = gymCoach::where('staff_id', $staffId)->get();
+        $coachedGyms = gymCoach::where('user_id', $userId)->get();
 
         $gymsCollection = collect([]);
 
@@ -56,7 +56,7 @@ class coachController extends Controller {
         $gymsCity = Gym::where('id', $gymsCollection[0]->city_id)->first();
 
         return view('coaches.edit', [
-            'staff' => $staff,
+            'user' => $user,
             // 'gyms' => $gyms,
             'cities' => $cities,
             'gymsCollection' => $gymsCollection,
@@ -69,11 +69,11 @@ class coachController extends Controller {
         if (Auth::user()->hasRole('coach'))
             return view('coaches.show', ['coach' => Auth::user()]);
 
-        $coach = Staff::find($id);
+        $coach = User::find($id);
         return view('coaches.show', ['coach' => $coach]);
     }
 
-    public function update($staffId, CoachRequest $request) {
+    public function update($userId, CoachRequest $request) {
         // print_r(request()->all()['avatar']);
         $requestData = request()->all();
 
@@ -82,19 +82,19 @@ class coachController extends Controller {
             $requestData['avatar']->move(public_path('images'), $imageName);
             $requestData['avatar'] = $imageName;
         } else {
-            $imageName = Staff::find($staffId)->avatar;
+            $imageName = User::find($userId)->avatar;
         }
 
-        Staff::find($staffId)->update($requestData);
+        User::find($userId)->update($requestData);
 
         if (isset($requestData['gyms'])) {
             $gymIds = $requestData['gyms'];
-            gymCoach::where('staff_id', $staffId)->delete();
+            gymCoach::where('user_id', $userId)->delete();
 
             foreach ($gymIds as $gymId) {
                 gymCoach::Create(
                     [
-                        'staff_id' => $staffId,
+                        'user_id' => $userId,
 
 
                         'gym_id' => $gymId
@@ -128,7 +128,7 @@ class coachController extends Controller {
             $imageName = 'user_avatar.png';
         }
         $gymIds = $requestData['gyms'];
-        $coach = Staff::create([
+        $coach = User::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
             'password' => Hash::make($requestData['password']),
@@ -137,13 +137,13 @@ class coachController extends Controller {
 
         ]);
         $coach->assignRole('coach');
-        $staffMember = Staff::where('name', $requestData['name'])->first();
+        $userMember = User::where('name', $requestData['name'])->first();
 
 
         foreach ($gymIds as $gymId) {
             gymCoach::Create(
                 [
-                    'staff_id' => $staffMember->id,
+                    'user_id' => $userMember->id,
 
 
                     'gym_id' => $gymId
@@ -159,7 +159,7 @@ class coachController extends Controller {
 
     public function destroy(Request $request) {
 
-        $member = Staff::where('id', $request->id)->delete();
+        $member = User::where('id', $request->id)->delete();
         return Response()->json($member);
     }
 
@@ -167,17 +167,17 @@ class coachController extends Controller {
         if (Auth::user()->hasRole('coach'))
             return view('coaches.profile', ['coach' => Auth::user()]);
 
-        $coach = Staff::find($id);
+        $coach = User::find($id);
         return view('coaches.profile', ['coach' => $coach]);
     }
     public function sessions($id) {
-        // $coachSession = Staff::find($id)->coachSessions;
+        // $coachSession = User::find($id)->coachSessions;
         // dd($coachSession);
         if (Auth::user()->hasRole('Super-Admin')) {
             $sessions = Session::with('gym')->get();
         } elseif (Auth::user()->hasRole('city_manager')) {
 
-            $cityId = City::where('staff_id', Auth::user()->id)->first()['id'];
+            $cityId = City::where('user_id', Auth::user()->id)->first()['id'];
             $gymIds = Gym::where('city_id', $cityId)->pluck('id');
             $sessions = collect();
             foreach ($gymIds as $gymId) {
@@ -187,7 +187,7 @@ class coachController extends Controller {
                 };
             }
         } elseif (Auth::user()->hasRole('gym_manager')) {
-            $gymId = GymManager::where('staff_id', Auth::user()->id)->first()['gym_id'];
+            $gymId = GymManager::where('user_id', Auth::user()->id)->first()['gym_id'];
             $sessions = Session::with('gym')->where('gym_id', $gymId)->get();
         }
 
@@ -227,18 +227,18 @@ class coachController extends Controller {
         }
         return view('coaches.sessions');
     }
-    public function password($staffId) {
+    public function password($userId) {
 
 
         return view(
             'coaches.password',
             [
-                'coachId' => $staffId,
+                'coachId' => $userId,
             ]
         );
     }
 
-    public function passwordUpdate(Request $request, $staffId) {
+    public function passwordUpdate(Request $request, $userId) {
         $this->validate($request, [
             'old_password' => ['nullable'],
             'password' => ['min:6', 'max:20', 'nullable'],
@@ -246,16 +246,16 @@ class coachController extends Controller {
         ]);
 
         if (isset($request->oldpassword)) {
-            $hashedPassword = Staff::find($staffId)->password;
+            $hashedPassword = User::find($userId)->password;
             if (Hash::check($request->oldpassword, $hashedPassword)) {
 
-                $user = Staff::find($staffId);
+                $user = User::find($userId);
                 $user->password = bcrypt($request->password);
                 $user->save();
             } else {
                 return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
             }
         }
-        return redirect()->route('coaches.show', $staffId);
+        return redirect()->route('coaches.show', $userId);
     }
 }
