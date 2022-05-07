@@ -22,6 +22,9 @@
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3cf4e46f78c067c72f43a1250b3a57df71267ba7
 <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
     <thead>
         <tr class="text-white">
@@ -36,6 +39,7 @@
     <tbody>
     </tbody>
 </table>
+<<<<<<< HEAD
 =======
     <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">
         <thead>
@@ -52,6 +56,8 @@
         </tbody>
     </table>
 >>>>>>> 11e8c2b095c16f5d2d9d3ac1d14e3737f80fc2e5
+=======
+>>>>>>> 3cf4e46f78c067c72f43a1250b3a57df71267ba7
 </div>
 
 @endif
@@ -59,7 +65,7 @@
 
 @endsection
 
-@section('javascripts') 
+@section('javascripts')
     <script>
         $(document).ready( function () {
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -94,7 +100,7 @@
                     data:'national_id',
                     name:'national_id',
                 },
-                
+
                 {
                     data: 'action',
                     name: 'action',
@@ -115,11 +121,11 @@
            success: function(res){
             $('#table_id').DataTable().ajax.reload();
               },
-            error:function(){ 
+            error:function(){
             alert("Failed");
         }
          });
-         
+
     }}
     </script>
 @endsection

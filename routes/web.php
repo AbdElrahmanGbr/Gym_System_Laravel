@@ -39,7 +39,11 @@ Route::get('logout', [LoginController::class, 'logout']);
 
 
 Route::group(['middleware' => 'auth', 'middleware' => 'forbid-banned-user', 'middleware' => 'logs-out-banned-user'], function () {
+<<<<<<< HEAD
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
+=======
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+>>>>>>> 3cf4e46f78c067c72f43a1250b3a57df71267ba7
 
     /* ======================= Admin Routes ========================= */
     Route::group(['middleware' => ['role_or_permission:Super-Admin']], function () {
