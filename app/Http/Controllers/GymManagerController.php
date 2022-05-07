@@ -137,12 +137,14 @@ class GymManagerController extends Controller
     }
     //-------------------- delete member -------------------------------
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
 
         $member = User::where('id', $request->id)->delete();
         return Response()->json($member);
     }
-    public function ban(Request $request) {
+    public function ban(Request $request)
+    {
 
         $member = User::find($request->id);
         $ban = $member->isBanned() ? $member->unban() : $member->ban();

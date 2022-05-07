@@ -124,7 +124,7 @@ Route::group(['middleware' => 'auth', 'middleware' => 'forbid-banned-user', 'mid
     Route::group(['middleware' => ['role_or_permission:coach|Super-Admin']], function () {
         /* ======================= Coaches Routes ========================= */
         Route::get("/coaches/{id}/profile/edit", [CoachController::class, 'edit'])->name('coaches.edit');
-        Route::put('coaches/{coachId}', [coachController::class, 'update'])->name('coaches.update');
+        Route::put('coaches/{coachId}', [CoachController::class, 'update'])->name('coaches.update');
     });
 
 
@@ -156,11 +156,11 @@ Route::group(['middleware' => 'auth', 'middleware' => 'forbid-banned-user', 'mid
 
 
     /* ======================== Coaches ============================================= */
-    Route::get('coaches', [coachController::class, 'index'])->name('coaches.index');
-    Route::post('coaches', [coachController::class, 'store'])->name('coaches.store');
-    Route::get('coaches/create', [coachController::class, 'create'])->name('coaches.create');
-    // Route::get('coaches/{coachId}/edit', [coachController::class, 'edit'])->name('coaches.edit');
-    Route::post('destroy-coach', [coachController::class, 'destroy'])->name('coaches.destroy');
+    Route::get('coaches', [CoachController::class, 'index'])->name('coaches.index');
+    Route::post('coaches', [CoachController::class, 'store'])->name('coaches.store');
+    Route::get('coaches/create', [CoachController::class, 'create'])->name('coaches.create');
+    // Route::get('coaches/{coachId}/edit', [CoachController::class, 'edit'])->name('coaches.edit');
+    Route::post('destroy-coach', [CoachController::class, 'destroy'])->name('coaches.destroy');
     Route::get('getGym/{id}', function ($id) {
         $gym = App\Models\Gym::where('city_id', $id)->get();
         return response()->json($gym);

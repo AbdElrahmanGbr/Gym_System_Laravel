@@ -27,9 +27,11 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-between ">
                                     <b>Gyms</b>
                                     <ul class="list-unstyled text-primary">
-                                        @foreach($coach->coachGyms as $gym)
+                                        @if (is_array($gyms) || is_object($gyms))
+                                        @foreach ($coach->gyms as $gyms)
                                         <li>{{$gym->name}}</li>
                                         @endforeach
+                                        @endif
                                     </ul>
                                 </li>
                             </div>
