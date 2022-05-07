@@ -131,8 +131,10 @@ Route::group(['middleware' => 'auth', 'middleware' => 'forbid-banned-user', 'mid
 
     Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
         /* ======================= Payment Routes ========================= */
-        Route::get('stripe', [StripePaymentController::class, 'stripe']);
-        Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+        Route::group(['middleware' => ['role_or_permission:Super-Admin|city_manager|gym_manager']], function () {
+            Route::get('stripe', [StripePaymentController::class, 'stripe']);
+            Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+        });
 
         //-------------------------- Purchases Routes --------------------------------
         Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');

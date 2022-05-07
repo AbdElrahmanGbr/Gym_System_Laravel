@@ -1467,7 +1467,7 @@
                 "illuminate/queue": "self.version",
                 "illuminate/redis": "self.version",
                 "illuminate/routing": "self.version",
-                "illuminate/session": "self.version",
+                "illuminate/": "self.version",
                 "illuminate/support": "self.version",
                 "illuminate/testing": "self.version",
                 "illuminate/translation": "self.version",
@@ -7098,7 +7098,7 @@
             },
             "require": {
                 "illuminate/routing": "^6|^7|^8|^9",
-                "illuminate/session": "^6|^7|^8|^9",
+                "illuminate/": "^6|^7|^8|^9",
                 "illuminate/support": "^6|^7|^8|^9",
                 "maximebf/debugbar": "^1.17.2",
                 "php": ">=7.2",
