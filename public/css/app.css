@@ -10983,7 +10983,7 @@ a.text-dark:focus {
   }
 
   abbr[title]::after {
-    content: " ("attr(title) ")";
+    content: " (" attr(title) ")";
   }
 
   pre {
@@ -34926,8 +34926,8 @@ a.disabled.mailbox-attachment-close {
   margin-bottom: 0;
 }
 
-.projects img.table-,
-.projects .table- img {
+.projects img.table-avatar,
+.projects .table-avatar img {
   border-radius: 50%;
   display: inline;
   width: 2.5rem;
