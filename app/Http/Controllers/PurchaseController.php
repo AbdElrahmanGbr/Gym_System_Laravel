@@ -20,70 +20,51 @@ class PurchaseController extends Controller
     {
         if (Auth::user()->hasRole('Super-Admin')) {
             $purchases = UserTrainingPackage::with('user', 'package')->get();
-        } elseif (Auth::user()->hasRole('city_manager')) 
-        {
+        } elseif (Auth::user()->hasRole('city_manager')) {
             $purchases = collect();
 
-           $city = City::where('staff_id',Auth::user()->id)->first();
-           if(isset($city))
-           {
-            $gyms = Gym::where('city_id',$city->id)->get();
-          
-            $tIds=[];
-             foreach($gyms as $gym)
-             {
-              $trainingPackages=TrainingPackage::where('gym_id',$gym->id)->get();
-              $ids = $trainingPackages->pluck('id');
-              foreach($ids as $id)
-              {
-                 array_push($tIds,$id);
-              }
-                 
-             }
-             
- 
-             foreach($tIds as $tId)
-             {   
-                 
-                 $userTrainingPackages = UserTrainingPackage::with('user', 'package')->where('training_package_id',$tId)->get();
-                 foreach($userTrainingPackages as $trainingPackage)
-                 {
-                     $purchases->push($trainingPackage);
-                 };
-             }
+            $city = City::where('user_id', Auth::user()->id)->first();
+            if (isset($city)) {
+                $gyms = Gym::where('city_id', $city->id)->get();
 
-           }
-           
-           
-        }else if (Auth::user()->hasRole('gym_manager'))
-        {   
-            $purchases = collect();
-            $gym = GymManager::where('staff_id',Auth::user()->id)->first();
-            if(isset($gym))
-            {
-            $tIds=[];
-            $trainingPackages=TrainingPackage::where('gym_id',$gym->gym_id)->get();
-            $ids = $trainingPackages->pluck('id');
-             foreach($ids as $id)
-             {
-                array_push($tIds,$id);
-             }
-           
-             
-             foreach($tIds as $tId)
-             {   
-                 
-                 $userTrainingPackages = UserTrainingPackage::with('user', 'package')->where('training_package_id',$tId)->get();
-                 foreach($userTrainingPackages as $trainingPackage)
-                 {
-                     $purchases->push($trainingPackage);
-                 };
-             }
+                $tIds = [];
+                foreach ($gyms as $gym) {
+                    $trainingPackages = TrainingPackage::where('gym_id', $gym->id)->get();
+                    $ids = $trainingPackages->pluck('id');
+                    foreach ($ids as $id) {
+                        array_push($tIds, $id);
+                    }
+                }
 
+
+                foreach ($tIds as $tId) {
+
+                    $userTrainingPackages = UserTrainingPackage::with('user', 'package')->where('training_package_id', $tId)->get();
+                    foreach ($userTrainingPackages as $trainingPackage) {
+                        $purchases->push($trainingPackage);
+                    };
+                }
             }
-           
-            
+        } else if (Auth::user()->hasRole('gym_manager')) {
+            $purchases = collect();
+            $gym = GymManager::where('user_id', Auth::user()->id)->first();
+            if (isset($gym)) {
+                $tIds = [];
+                $trainingPackages = TrainingPackage::where('gym_id', $gym->gym_id)->get();
+                $ids = $trainingPackages->pluck('id');
+                foreach ($ids as $id) {
+                    array_push($tIds, $id);
+                }
 
+
+                foreach ($tIds as $tId) {
+
+                    $userTrainingPackages = UserTrainingPackage::with('user', 'package')->where('training_package_id', $tId)->get();
+                    foreach ($userTrainingPackages as $trainingPackage) {
+                        $purchases->push($trainingPackage);
+                    };
+                }
+            }
         }
 
         if (request()->ajax()) {

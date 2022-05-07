@@ -7,7 +7,7 @@
 
 <div class="text-center mydiv">
     <a href="{{route('training-packages.create')}}" class="btn btn-success"> Add New Package </a>
-    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
+    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-white">
         <thead>
             <tr class="text-white">
                 <th>id</th>
