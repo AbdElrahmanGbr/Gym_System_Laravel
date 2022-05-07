@@ -56,6 +56,7 @@
                 <option id={{$gym->id}}>{{$gym->name}}</option>
                 @endif
             </select>
+
         </div>
 
         <div class="mb-3 col-sm-7">
@@ -74,17 +75,22 @@
             </select>
         </div>
 
+
         <div class="mb-3 col-sm-7">
             <label for="inputPackage" class="form-label">Package</label>
             <select id="inputPackage" class="form-select form-control packages " aria-label="Default select" name="training_package">
                 <option selected>Select a package</option>
             </select>
+
         </div>
+
 
         <div class="mb-3 col-sm-7">
             <label for="inputCardNumber" class="form-label">Card Number</label>
             <input type="text" class="form-control card-number" id="inputCardNumber" placeholder="5105105105105100" autocomplete="false">
+
         </div>
+
         <div class="row">
             <div class="col-4">
                 <label for="inputCVC" class="form-label">CVC</label>
@@ -122,7 +128,8 @@
 
 <script type="text/javascript">
     $(function() {
-        @if(Auth::user() - > hasRole('Super-Admin'))
+
+        @if(Auth::user() -> hasRole('Super-Admin'))
         // Handle City
         $('.cities').on('change', function() {
             $.ajax({
@@ -132,6 +139,7 @@
                 },
                 url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
                 success: function(response) {
+                    console.log(response);
                     $('.gyms').empty();
                     $('.gyms').append(`<option value="" disabled selected hidden>Select a Gym</option>`);
                     if (response.gyms.length > 0) {
@@ -145,7 +153,7 @@
         });
         @endif
 
-        @if(Auth::user() - > hasRole('Super-Admin') || Auth::user() - > hasRole('city_manager'))
+        @if(Auth::user() -> hasRole('Super-Admin') || Auth::user() -> hasRole('city_manager'))
         $('.gyms').on('change', function() {
             $.ajax({
                 type: 'get',
@@ -168,16 +176,16 @@
         @endif
 
         $('.gyms').on('change', function() {
-            getGymPackages($(this).val());
+            getGymPackages($(this).val())
         });
 
         @role('gym_manager')
-        let gymId = {
+        let id = {
             {
-                Auth::user() - > gymManger - > first() - > id
+                Auth::user() -> gymManger -> first() -> id
             }
         }
-        getGymPackages(gymId)
+        getGymPackages(id)
         @endrole
 
         function getGymPackages(gymId) {
@@ -192,13 +200,12 @@
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
                         $('.packages').append(`<option value="${package.id}">
-                            <span>${package.name}  $${package.price * 0.01}</span>
+                            <span>${package.name}  $${package.price}</span>
                         </option>`);
                     })
                 }
             })
         }
-
 
         var $form = $(".require-validation");
 
@@ -225,7 +232,7 @@
 
             if (!$form.data('cc-on-file')) {
                 e.preventDefault();
-                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+                Stripe.setPublishableKey($forms.data('stripe-publishable-key'));
                 Stripe.createToken({
                     number: $('.card-number').val(),
                     cvc: $('.card-cvc').val(),

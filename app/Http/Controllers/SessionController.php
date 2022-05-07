@@ -6,8 +6,6 @@ use App\Models\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\GymCoaches;
-
-
 use App\Models\SessionUser;
 use App\Http\Requests\SessionRequest;
 use App\Http\Requests\SessionUpdateRequest;
@@ -17,8 +15,10 @@ use App\Models\GymCoach;
 use App\Models\GymManager;
 use Illuminate\Support\Facades\Auth;
 
-class SessionController extends Controller {
-    public function index() {
+class SessionController extends Controller
+{
+    public function index()
+    {
         $sessions = collect();
         if (Auth::user()->hasRole('Super-Admin')) {
             $sessions = Session::with('gym')->get();
@@ -26,7 +26,6 @@ class SessionController extends Controller {
 
             $cityId = City::where('user_id', Auth::user()->id)->first()['id'];
             $gymIds = Gym::where('city_id', $cityId)->pluck('id');
-            
             foreach ($gymIds as $gymId) {
                 $gymSessions = Session::where('gym_id', $gymId)->get();
                 foreach ($gymSessions as $gymSession) {
@@ -36,17 +35,13 @@ class SessionController extends Controller {
         } elseif (Auth::user()->hasRole('gym_manager')) {
             $gymId = GymManager::where('user_id', Auth::user()->id)->first()['gym_id'];
             $sessions = Session::with('gym')->where('gym_id', $gymId)->get();
-        }else
-        {
+        } else {
             $gymIds = GymCoach::where('user_id', Auth::user()->id)->pluck('gym_id');
-            foreach($gymIds as $gymId)
-            {
+            foreach ($gymIds as $gymId) {
                 $coachSessions = Session::with('gym')->where('gym_id', $gymId)->get();
-                foreach ($coachSessions as $session)
-                {
+                foreach ($coachSessions as $session) {
                     $sessions->push($session);
                 }
-
             }
         }
 
@@ -90,13 +85,14 @@ class SessionController extends Controller {
         ]);
     }
 
-    public function create() {
-        $coaches=User::role('coach');
+    public function create()
+    {
+        $coaches = User::role('coach');
         $cities = City::all();
 
         return view('sessions.create', [
             'cities' => $cities,
-            'coaches'=>$coaches
+            'coaches' => $coaches
         ]);
     }
 
@@ -105,19 +101,13 @@ class SessionController extends Controller {
         $requestData = request()->all();
 
         if (Auth::user()->hasRole('Super-Admin')) {
-            $gymId=$requestData['gym'];
-        }
-
-        elseif (Auth::user()->hasRole('city_manager'))
-        {
-            $gymId=$requestData['gym'];
-        }
-
-        elseif (Auth::user()->hasRole('gym_manager'))
-        {
+            $gymId = $requestData['gym'];
+        } elseif (Auth::user()->hasRole('city_manager')) {
+            $gymId = $requestData['gym'];
+        } elseif (Auth::user()->hasRole('gym_manager')) {
             $gymId = GymManager::where('user_id', Auth::user()->id)->first()['gym_id'];
         }
-        
+
         $dataTimeStart = $requestData['day'] . " " . $requestData['start']; //concat date with time
         $dateTimeFinish = $requestData['day'] . " " . $requestData['finish'];
 
@@ -155,28 +145,29 @@ class SessionController extends Controller {
 
     public function edit(Request $request)
     {
-      $coaches=User::role('coach')->pluck('name');
-      $coachesid=User::role('coach')->pluck('id');
-      $session=Session::find($request->id);
-      $selectedCoaches=SessionUser::where('session_id','=',$session->id)->pluck('user_id');
+        $coaches = User::role('coach')->pluck('name');
+        $coachesid = User::role('coach')->pluck('id');
+        $session = Session::find($request->id);
+        $selectedCoaches = SessionUser::where('session_id', '=', $session->id)->pluck('user_id');
 
-      $output=array(
-        'name' => $session->name,
-        'start_at' => $session->start_at,
-        'finish_at' => $session->finish_at,
-        'coaches' => $coaches,
-        'coachesid'=>$coachesid,
-        'selectedCoaches'=>$selectedCoaches
-      );
+        $output = array(
+            'name' => $session->name,
+            'start_at' => $session->start_at,
+            'finish_at' => $session->finish_at,
+            'coaches' => $coaches,
+            'coachesid' => $coachesid,
+            'selectedCoaches' => $selectedCoaches
+        );
         echo json_encode($output);
 
     }
 
 
-    public function update(SessionUpdateRequest $request) {
+    public function update(SessionUpdateRequest $request)
+    {
         $requestData = request()->all();
-        
-        //check if any one attend this session 
+
+        //check if any one attend this session
         $SomeoneAttend = SessionUser::where('session_id', '=', $requestData['id'])->exists();
         $CurrentSession = Session::find($request->id);
         $startdate = $CurrentSession->start_at;
@@ -191,7 +182,6 @@ class SessionController extends Controller {
                 'name' => $requestData['name'],
                 'start_at' => $requestData['day'] . " " . $requestData['start'],
                 'finish_at' => $requestData['day'] . " " . $requestData['finish'],
-                 
             ]);
             $coaches = $requestData['coaches'];
             $coaches = array_values($coaches);

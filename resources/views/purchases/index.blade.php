@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 <div class="text-center mydiv">
-    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">
+    <table id="table_id" class="table table-responsive-md cell-border compact stripe table-dark my-4 text-white">
         <thead>
             <tr class="text-white">
                 <th>id</th>

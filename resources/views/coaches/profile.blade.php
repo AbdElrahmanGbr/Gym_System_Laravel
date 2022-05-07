@@ -24,15 +24,18 @@
                </li>
                </div>
 
-               <div class="p-2 bg-light border">
-               <li class="list-group-item d-flex align-items-center justify-content-between ">
-                <b>Gyms</b> <ul class="list-unstyled text-primary">
-                    @foreach($coach->coachGyms as $gym) 
-                    <li>{{$gym->name}}</li>
-                    @endforeach
-                </ul>
-            </li>
-               </div>
+                            <div class="p-2 bg-light border">
+                                <li class="list-group-item d-flex align-items-center justify-content-between ">
+                                    <b>Gyms</b>
+                                    <ul class="list-unstyled text-primary">
+                                        @if (is_array($gyms) || is_object($gyms))
+                                        @foreach ($coach->gyms as $gyms)
+                                        <li>{{$gym->name}}</li>
+                                        @endforeach
+                                        @endif
+                                    </ul>
+                                </li>
+                            </div>
 
         </div>
 

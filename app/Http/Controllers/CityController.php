@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\City;
-use App\Models\Staff;
 use App\Models\Gym;
 
 class CityController extends Controller
@@ -14,11 +13,13 @@ class CityController extends Controller
         $cities = City::with('cityManager')->get();
 
         if (request()->ajax()) {
-
-            // $query = City::with('cityManager')->select('staff.*');
             return datatables()->of($cities)
                 ->addColumn('cityManagers', function (City $city) {
-                    return $city->cityManager->name;
+                    if ($city->cityManager !== null) {
+                        return $city->cityManager->name;
+                    } else {
+                        return "Not asigned yet";
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="javascript:void(0)" onClick = "editFunc(' . $data->id . ')"class="btn btn-info btn-sm mx-4">Edit</a>';
@@ -35,7 +36,7 @@ class CityController extends Controller
             ]
         );
     }
-
+    //--------------------------- add new city -----------------------------
     public function store(Request $request)
     {
         $cityId = $request->id;
@@ -46,14 +47,14 @@ class CityController extends Controller
             ],
             [
                 'name' => $request->name,
-                'user_id' => 1,
+
 
             ]
         );
 
         return Response()->json($city);
     }
-
+    //--------------------- Edit name of city ------------------------------
     public function edit(Request $request)
     {
         $where = array('id' => $request->id);
@@ -61,12 +62,25 @@ class CityController extends Controller
 
         return Response()->json($city);
     }
-
+    //-----------------------  delete city -------------------------------------
     public function destroy(Request $request)
     {
-        //  $gyms = Gym::Where("city_id","=",$request->id);
-        // if(empty($gyms))
-        $city = City::where('id', $request->id)->delete();
-        return Response()->json($city);
+        $gyms = City::find($request->id)->gyms;
+        $gymnumber = 0;
+        foreach ($gyms as $gym) {
+            if (!empty($gym))
+                $gymnumber += 1;
+        }
+        if ($gymnumber == 0) {
+            $city = City::where('id', $request->id)->delete();
+            return Response()->json($city);
+        }
+    }
+
+    //-----------------------  City Gyms -------------------------------------
+    public function gyms($id)
+    {
+        $gyms = Gym::where('city_id', $id)->get();
+        return response()->json(['gyms' => $gyms]);
     }
 }
