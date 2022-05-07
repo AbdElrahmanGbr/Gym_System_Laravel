@@ -15,76 +15,80 @@
         <p>{{Session::get('error')}}</p>
     </div>
     @endif
-    <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation row d-flex flex-column justify-content-center align-items-center" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+    <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation row d-flex flex-column justify-content-center align-items-center"
+        data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
         @csrf
 
-        <div class="mb-3 col-sm-7">
-            <label for="inputCity" class="form-label">City</label>
-            <select id="inputCity" class="form-select form-control cities" aria-label="Default select" name="city">
-                @if(Auth::user()->hasRole('Super-Admin'))
-                <option selected disabled>Select a City</option>
-                @foreach($cities as $city)
-                <option value="{{$city->id}}">{{$city->name}}</option>
-                @endforeach
-                @elseif(Auth::user()->hasRole('city_manager'))
-                <option value="{{Auth::user()->city->id}}">{{Auth::user()->city->name}}</option>
-                @elseif(Auth::user()->hasRole('gym_manager'))
-                @php
-                $city = Auth::user()->gymManger->first()->city;
-                @endphp
-                <option value={{$city->id}}>{{$city->name}}</option>
-                @endif
-            </select>
-        </div>
+            <div class="mb-3 col-sm-7">
+                <label for="inputCity" class="form-label">City</label>
+                <select id="inputCity" class="form-select form-control cities" aria-label="Default select" name="city">
+                    @if(Auth::user()->hasRole('Super-Admin'))
+                    <option selected disabled>Select a City</option>
+                    @foreach($cities as $city)
+                    <option value="{{$city->id}}">{{$city->name}}</option>
+                    @endforeach
+                    @elseif(Auth::user()->hasRole('city_manager'))
+                    <option value="{{Auth::user()->city->id}}">{{Auth::user()->city->name}}</option>
+                    @elseif(Auth::user()->hasRole('gym_manager'))
+                    @php
+                        $city = Auth::user()->gymManger->first()->city;
+                    @endphp
+                    <option value={{$city->id}}>{{$city->name}}</option>
+                    @endif
+                </select>
+            </div>
 
-        <div class="mb-3 col-sm-7">
-            <label for="inputGym" class="form-label">Gym</label>
-            <select id="inputGym" class="form-select form-control gyms" aria-label="Default select" name="gym">
+            <div class="mb-3 col-sm-7">
+                <label for="inputGym" class="form-label">Gym</label>
+                <select id="inputGym" class="form-select form-control gyms" aria-label="Default select" name="gym">
 
-                @if(Auth::user()->hasRole('city_manager') || Auth::user()->hasRole('Super-Admin'))
-                <option selected disabled>Select a Gym</option>
-                @endif
+                    @if(Auth::user()->hasRole('city_manager') || Auth::user()->hasRole('Super-Admin'))
+                    <option selected disabled>Select a Gym</option>
+                    @endif
 
-                @if(Auth::user()->hasRole('city_manager'))
-                @foreach (Auth::user()->city->gyms as $gym)
-                <option value="{{$gym->id}}">{{$gym->name}}</option>
-                @endforeach
-                @elseif(Auth::user()->hasRole('gym_manager'))
-                @php
-                $gym = Auth::user()->gymManger->first();
-                @endphp
-                <option id={{$gym->id}}>{{$gym->name}}</option>
-                @endif
-            </select>
-        </div>
+                    @if(Auth::user()->hasRole('city_manager'))
+                    @foreach (Auth::user()->city->gyms as $gym)
+                    <option value="{{$gym->id}}">{{$gym->name}}</option>
+                    @endforeach
+                    @elseif(Auth::user()->hasRole('gym_manager'))
+                        @php
+                        $gym = Auth::user()->gymManger->first();
+                        @endphp
+                        <option id={{$gym->id}}>{{$gym->name}}</option>
+                    @endif
+                </select>
+            </div>
 
-        <div class="mb-3 col-sm-7">
-            <label for="inputUserName" class="form-label">User Name</label>
-            <select id="inputUserName" class="form-select form-control users" aria-label="Default select" name="user">
-                @if(Auth::user()->hasRole('gym_manager'))
-                @php
-                $users = Auth::user()->gymManger->first()->users;
-                @endphp
-                @foreach($users as $user)
-                <option value={{$user->id}}>{{$user->name}}</option>
-                @endforeach
-                @else
-                <option selected disabled>Select a user name</option>
-                @endif
-            </select>
-        </div>
+            <div class="mb-3 col-sm-7">
+                <label for="inputUserName" class="form-label">User Name</label>
+                <select id="inputUserName" class="form-select form-control users" aria-label="Default select"
+                    name="user">
+                    @if(Auth::user()->hasRole('gym_manager'))
+                    @php
+                        $users = Auth::user()->gymManger->first()->users;
+                    @endphp
+                    @foreach($users as $user)
+                    <option value={{$user->id}}>{{$user->name}}</option>
+                    @endforeach
+                    @else
+                    <option selected disabled>Select a user name</option>
+                    @endif
+                </select>
+            </div>
 
-        <div class="mb-3 col-sm-7">
-            <label for="inputPackage" class="form-label">Package</label>
-            <select id="inputPackage" class="form-select form-control packages " aria-label="Default select" name="training_package">
-                <option selected>Select a package</option>
-            </select>
-        </div>
+            <div class="mb-3 col-sm-7">
+                <label for="inputPackage" class="form-label">Package</label>
+                <select id="inputPackage" class="form-select form-control packages " aria-label="Default select"
+                    name="training_package">
+                    <option selected>Select a package</option>
+                </select>
+            </div>
 
-        <div class="mb-3 col-sm-7">
-            <label for="inputCardNumber" class="form-label">Card Number</label>
-            <input type="text" class="form-control card-number" id="inputCardNumber" placeholder="5105105105105100" autocomplete="false">
-        </div>
+            <div class="mb-3 col-sm-7">
+                <label for="inputCardNumber" class="form-label">Card Number</label>
+                <input type="text" class="form-control card-number" id="inputCardNumber" placeholder="5105105105105100"
+                    autocomplete="false">
+            </div>
         <div class="row">
             <div class="col-4">
                 <label for="inputCVC" class="form-label">CVC</label>
@@ -121,21 +125,21 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
 
-        @if(Auth::user() - > hasRole('Super-Admin'))
+        @if(Auth::user() -> hasRole('Super-Admin'))
         // Handle City
-        $('.cities').on('change', function() {
+        $('.cities').on('change', function () {
             $.ajax({
                 type: 'get',
                 headers: {
                     'Accept': 'application/json'
                 },
                 url: `http://127.0.0.1:8000/cities/${$(this).val()}/gyms`,
-                success: function(response) {
+                success: function (response) {
                     $('.gyms').empty();
                     $('.gyms').append(`<option value="" disabled selected hidden>Select a Gym</option>`);
-                    if (response.gyms.length > 0) {
+                    if(response.gyms.length > 0) {
                         response.gyms.forEach(gym => {
                             $('.gyms').append(
                                 `<option value="${gym.id}">${gym.name}</option>`);
@@ -146,15 +150,15 @@
         });
         @endif
 
-        @if(Auth::user() - > hasRole('Super-Admin') || Auth::user() - > hasRole('city_manager'))
-        $('.gyms').on('change', function() {
+        @if(Auth::user()->hasRole('Super-Admin') || Auth::user()->hasRole('city_manager'))
+        $('.gyms').on('change', function () {
             $.ajax({
                 type: 'get',
                 headers: {
                     'Accept': 'application/json'
                 },
                 url: `http://127.0.0.1:8000/gyms/${$(this).val()}/users`,
-                success: function(response) {
+                success: function (response) {
                     $('.users').empty();
                     $('.users').append(`<option value="" disabled selected hidden>Select a user name</option>`);
                     response.users.forEach(user => {
@@ -168,19 +172,14 @@
         });
         @endif
 
-        $('.gyms').on('change', function() {
+        $('.gyms').on('change', function () {
             getGymPackages($(this).val());
         });
 
         @role('gym_manager')
-        let gymId = {
-            {
-                Auth::user() - > gymManger - > first() - > id
-            }
-        }
+        let gymId = {{Auth::user()->gymManger->first()->id}}
         getGymPackages(gymId)
         @endrole
-
         function getGymPackages(gymId) {
             $.ajax({
                 type: 'get',
@@ -188,7 +187,7 @@
                     'Accept': 'application/json'
                 },
                 url: `http://127.0.0.1:8000/gyms/${gymId}/packages`,
-                success: function(response) {
+                success: function (response) {
                     $('.packages').empty();
                     $('.packages').append(`<option value="" disabled selected hidden>Select a Package</option>`);
                     response.packages.forEach(package => {
@@ -199,11 +198,11 @@
                 }
             })
         }
-
+        
 
         var $form = $(".require-validation");
 
-        $('form.require-validation').bind('submit', function(e) {
+        $('form.require-validation').bind('submit', function (e) {
             var $form = $(".require-validation"),
                 inputSelector = ['input[type=email]', 'input[type=password]',
                     'input[type=text]', 'input[type=file]',
@@ -215,7 +214,7 @@
             $errorMessage.addClass('hide');
 
             $('.has-error').removeClass('has-error');
-            $inputs.each(function(i, el) {
+            $inputs.each(function (i, el) {
                 var $input = $(el);
                 if ($input.val() === '') {
                     $input.parent().addClass('has-error');
@@ -257,6 +256,7 @@
         }
 
     });
+
 </script>
 
 @endsection
