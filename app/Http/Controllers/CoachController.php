@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
-class coachController extends Controller {
-    public function index() {
+class coachController extends Controller
+{
+    public function index()
+    {
         if (request()->ajax()) {
             return datatables()->of(User::role('coach')->get())
                 ->addColumn('action', function ($data) {
@@ -29,7 +31,8 @@ class coachController extends Controller {
         return view('coaches.index');
     }
     //--------------------------- edit user member -----------------------
-    public function edit($userId) {
+    public function edit($userId)
+    {
         $cities = City::all();
         $user = User::find($userId);
 
@@ -65,7 +68,8 @@ class coachController extends Controller {
         ]);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         if (Auth::user()->hasRole('coach'))
             return view('coaches.show', ['coach' => Auth::user()]);
 
@@ -73,7 +77,8 @@ class coachController extends Controller {
         return view('coaches.show', ['coach' => $coach]);
     }
 
-    public function update($userId, CoachRequest $request) {
+    public function update($userId, CoachRequest $request)
+    {
         // print_r(request()->all()['avatar']);
         $requestData = request()->all();
 
@@ -108,7 +113,8 @@ class coachController extends Controller {
         return redirect()->route('coaches.index');
     }
     //----------------------- create new member -------------------------
-    public function create() {
+    public function create()
+    {
         $cities = City::all();
         $gyms = Gym::all();
         return view(
@@ -119,7 +125,8 @@ class coachController extends Controller {
             ]
         );
     }
-    public function store(CityManagerRequest $request) {
+    public function store(CityManagerRequest $request)
+    {
         $requestData = request()->all();
         if (isset($requestData['avatar'])) {
             $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
@@ -157,20 +164,24 @@ class coachController extends Controller {
     }
     //-------------------- delete member -------------------------------
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
 
         $member = User::where('id', $request->id)->delete();
         return Response()->json($member);
     }
 
-    public function profile($id) {
+    public function profile($id)
+    {
         if (Auth::user()->hasRole('coach'))
             return view('coaches.profile', ['coach' => Auth::user()]);
 
         $coach = User::find($id);
-        return view('coaches.profile', ['coach' => $coach]);
+        $gyms = Gym::all();
+        return view('coaches.profile', ['coach' => $coach, 'gyms' => $gyms]);
     }
-    public function sessions($id) {
+    public function sessions($id)
+    {
         // $coachSession = User::find($id)->coachSessions;
         // dd($coachSession);
         if (Auth::user()->hasRole('Super-Admin')) {
@@ -227,7 +238,8 @@ class coachController extends Controller {
         }
         return view('coaches.sessions');
     }
-    public function password($userId) {
+    public function password($userId)
+    {
 
 
         return view(
@@ -238,7 +250,30 @@ class coachController extends Controller {
         );
     }
 
-    public function passwordUpdate(Request $request, $userId) {
+    public function passwordUpdate(Request $request, $userId)
+    {
+        $this->validate($request, [
+            'old_password' => ['nullable'],
+            'password' => ['min:6', 'max:20', 'nullable'],
+            'confirm' => ['same:password', 'nullable'],
+        ]);
+
+        if (isset($request->oldpassword)) {
+            $hashedPassword = User::find($userId)->password;
+            if (Hash::check($request->oldpassword, $hashedPassword)) {
+
+                $user = User::find($userId);
+                $user->password = bcrypt($request->password);
+                $user->save();
+            } else {
+                return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+            }
+        }
+        return redirect()->route('coaches.show', $userId);
+    }
+
+    public function passwordUpdate(Request $request, $userId)
+    {
         $this->validate($request, [
             'old_password' => ['nullable'],
             'password' => ['min:6', 'max:20', 'nullable'],
