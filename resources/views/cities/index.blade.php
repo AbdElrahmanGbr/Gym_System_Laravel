@@ -11,7 +11,7 @@
 </div>
 
 
-<table id="table_id" class="table table-bordered table-striped">
+<table id="table_id" class="table-dark table-bordered text-dark text-center">
     <thead>
         <tr>
             <th>id</th>

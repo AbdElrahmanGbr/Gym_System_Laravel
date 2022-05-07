@@ -7,7 +7,7 @@
 <div class="text-center mydiv">
     <a href="{{route('city-managers.create')}}" class="btn btn-success">Add New Manager </a>
 
-    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
+    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">
         <thead>
             <tr class="text-white">
                 <th>id</th>

@@ -21,6 +21,7 @@
 @if(Auth::user()->hasRole('Super-Admin'))
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
+<<<<<<< HEAD
 <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
     <thead>
         <tr class="text-white">
@@ -35,6 +36,22 @@
     <tbody>
     </tbody>
 </table>
+=======
+    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">
+        <thead>
+            <tr class="text-white">
+                <th>id</th>
+                <th>name</th>
+                <th>email</th>
+                <th>avatar</th>
+                <th>national_id</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+>>>>>>> 11e8c2b095c16f5d2d9d3ac1d14e3737f80fc2e5
 </div>
 
 @endif

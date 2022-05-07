@@ -6,7 +6,7 @@
 @section('content')
 <div class="text-center mydiv">
     <a href="{{route('gym-managers.create')}}" class="btn btn-success btn-lg my-2">Add New Manager </a>
-    <table id="table_id" class="table table-responsive-md cell-border compact stripe table-dark my-4 text-dark">
+    <table id="table_id" class="table table-responsive-md cell-border compact stripe table-dark my-4 text-white">
         <thead>
             <tr class="text-white">
                 <th>id</th>
@@ -58,6 +58,13 @@
                     name: 'email',
                 },
                 {
+<<<<<<< HEAD
+=======
+                    data: 'national_id',
+                    name: 'national_id',
+                },
+                {
+>>>>>>> 11e8c2b095c16f5d2d9d3ac1d14e3737f80fc2e5
                     data: 'gym-city',
                     name: 'gym-city',
                 },
@@ -116,4 +123,8 @@
         }
     }
 </script>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> 11e8c2b095c16f5d2d9d3ac1d14e3737f80fc2e5
