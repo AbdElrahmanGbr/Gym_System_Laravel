@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Cashier\Billable;
 use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Bannable;
+    use HasApiTokens, HasFactory, HasRoles, Bannable, Billable;
 
     /**
      * The attributes that are mass assignable.

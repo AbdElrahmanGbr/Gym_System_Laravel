@@ -75,7 +75,8 @@ class GymManagerController extends Controller
 
         ]);
     }
-    public function update($userId, GymManagerUpdateRequest $request) {
+    public function update($userId, GymManagerUpdateRequest $request)
+    {
         $requestData = request()->all();
         if (isset($requestData['avatar'])) {
             $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
@@ -116,7 +117,8 @@ class GymManagerController extends Controller
         return redirect()->route('gym-managers.index');
     }
     //----------------------- create new member -------------------------
-    public function create() {
+    public function create()
+    {
         $cities = City::all();
         $gyms = Gym::all();
         return view(
@@ -127,7 +129,8 @@ class GymManagerController extends Controller
             ]
         );
     }
-    public function store(GymManagerRequest $request) {
+    public function store(GymManagerRequest $request)
+    {
         $requestData = request()->all();
         if (isset($requestData['avatar'])) {
             $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();

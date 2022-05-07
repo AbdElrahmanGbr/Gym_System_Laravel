@@ -13,7 +13,6 @@
                 <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>National_ID</th>
                 <th>Gym-City</th>
                 <th></th>
             </tr>
@@ -21,116 +20,101 @@
         <tbody>
         </tbody>
     </table>
-    </div>
+</div>
 
 @endsection
 @section('javascripts')
-    <script>
-        $(document).ready( function () {
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
-            ajax:{
+            ajax: {
                 url: "{{ route('gym-managers.index') }}"
             },
-            columns:[
-                {
-                    data:'id',
-                    name:'id',
+            columns: [{
+                    data: 'id',
+                    name: 'id',
                 },
                 {
-                    data:'avatar',
-                    name:'avatar',
-                    render:function(data,type,full,meta)
-                    {
-                        return "<img src='images/"+data+"' width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    data: 'avatar',
+                    name: 'avatar',
+                    render: function(data, type, full, meta) {
+                        return "<img src='images/" + data + "' width='60' style='border-radius:50%;' class='img-thumbnail'  />";
                     },
-                    orderable:false
+                    orderable: false
                 },
                 {
-                    data:'name',
-                    name:'name',
+                    data: 'name',
+                    name: 'name',
                 },
                 {
-                    data:'email',
-                    name:'email',
+                    data: 'email',
+                    name: 'email',
                 },
+
                 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                    data: 'national_id',
-                    name: 'national_id',
-                },
-                {
->>>>>>> 11e8c2b095c16f5d2d9d3ac1d14e3737f80fc2e5
                     data: 'gym-city',
                     name: 'gym-city',
-=======
-                    data:'national_id',
-                    name:'national_id',
-                },
-                {
-                    data:'gym-city',
-                    name:'gym-city',
->>>>>>> 3cf4e46f78c067c72f43a1250b3a57df71267ba7
                 },
 
 
                 {
-                    data:'action',
-                    name:'action',
-                    orderable:false,
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
                 },
             ]
         });
-    } );
-    function deleteFunc(id){
-        if (confirm("Delete Record?") == true) {
-        var id = id;
-         // ajax
-        $.ajax({
-           type:"POST",
-           url: "{{ url('destroy-gym-manager') }}",
-           data: { id: id },
-           dataType: 'json',
-           success: function(res){
-            $('#table_id').DataTable().ajax.reload();
-              },
-            error:function(){
-            alert("Failed");
-        }
-         });
+    });
 
-    }}
-    function ban(id){
-        if (confirm("Ban this member?") == true) {
-        var id = id;
-         // ajax
-        $.ajax({
-           type:"POST",
-           url: "{{ url('ban-gym-manager') }}",
-           data: { id: id },
-           dataType: 'json',
-           success: function(res){
-            $('#table_id').DataTable().ajax.reload();
-              },
-            error:function(){
-            alert("Failed");
+    function deleteFunc(id) {
+        if (confirm("Delete Record?") == true) {
+            var id = id;
+            // ajax
+            $.ajax({
+                type: "POST",
+                url: "{{ url('destroy-gym-manager') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#table_id').DataTable().ajax.reload();
+                },
+                error: function() {
+                    alert("Failed");
+                }
+            });
+
         }
-<<<<<<< HEAD
+    }
+
+    function ban(id) {
+        if (confirm("Ban this member?") == true) {
+            var id = id;
+            // ajax
+            $.ajax({
+                type: "POST",
+                url: "{{ url('ban-gym-manager') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#table_id').DataTable().ajax.reload();
+                },
+                error: function() {
+                    alert("Failed");
+                }
+            });
+
+        }
     }
 </script>
-<<<<<<< HEAD
 @endsection
-=======
-@endsection
->>>>>>> 11e8c2b095c16f5d2d9d3ac1d14e3737f80fc2e5
-=======
-         });
-
-    }}
-    </script>
-@endsection
->>>>>>> 3cf4e46f78c067c72f43a1250b3a57df71267ba7
