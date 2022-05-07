@@ -3,9 +3,9 @@
 @if(Auth::user()->hasRole('coach'))
 @section('starter_script')
 @php
-$id = Auth::user()->id;
-$url = url("/coaches/$id");
-// dd($url);
+    $id = Auth::user()->id;
+    $url = url("/coaches/$id");
+    // dd($url);
 @endphp
 <script>
     window.location.href = "{{$url}}";
@@ -21,20 +21,20 @@ $url = url("/coaches/$id");
 @if(Auth::user()->hasRole('Super-Admin'))
 <div class="text-center mydiv">
     <a href="{{route('coaches.create')}}" class="btn btn-success">Add New Coach </a>
-    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
-        <thead>
-            <tr class="text-white">
-                <th>id</th>
-                <th>name</th>
-                <th>email</th>
-                <th>avatar</th>
-                <th>national_id</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
+    <thead>
+        <tr class="text-white">
+            <th>id</th>
+            <th>name</th>
+            <th>email</th>
+            <th>avatar</th>
+            <th>national_id</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 </div>
 
 @endif
@@ -42,14 +42,10 @@ $url = url("/coaches/$id");
 
 @endsection
 
-@section('javascripts')
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+@section('javascripts') 
+    <script>
+        $(document).ready( function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
@@ -69,18 +65,19 @@ $url = url("/coaches/$id");
                     name: 'email',
                 },
                 {
-                    data: 'avatar',
-                    name: 'avatar',
-                    render: function(data, type, full, meta) {
-                        return "<img src='images/" + data + "'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
+                    data:'avatar',
+                    name:'avatar',
+                    render:function(data,type,full,meta)
+                    {
+                        return "<img src='images/"+data+"'width='60' style='border-radius:50%;' class='img-thumbnail'  />";
                     },
                     orderable: false
                 },
                 {
-                    data: 'national_id',
-                    name: 'national_id',
+                    data:'national_id',
+                    name:'national_id',
                 },
-
+                
                 {
                     data: 'action',
                     name: 'action',
@@ -88,28 +85,24 @@ $url = url("/coaches/$id");
                 },
             ]
         });
-    });
-
-    function deleteFunc(id) {
+    } );
+    function deleteFunc(id){
         if (confirm("Delete Record?") == true) {
-            var id = id;
-            // ajax
-            $.ajax({
-                type: "POST",
-                url: "{{ url('destroy-coach') }}",
-                data: {
-                    id: id
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $('#table_id').DataTable().ajax.reload();
-                },
-                error: function() {
-                    alert("Failed");
-                }
-            });
-
+        var id = id;
+         // ajax
+        $.ajax({
+           type:"POST",
+           url: "{{ url('destroy-coach') }}",
+           data: { id: id },
+           dataType: 'json',
+           success: function(res){
+            $('#table_id').DataTable().ajax.reload();
+              },
+            error:function(){ 
+            alert("Failed");
         }
-    }
-</script>
+         });
+         
+    }}
+    </script>
 @endsection
