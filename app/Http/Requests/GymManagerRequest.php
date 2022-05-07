@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class GymManagerRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'name' => ['required', 'min:4', 'max:15'],
+            'email' => 'required|email|unique:users,email,',
+            'password' => ['required', 'min:6', 'max:20'],
+            'confirm' => ['required', 'same:password'],
+            'avatar' => ['image', 'mimes:jpg,png,jpeg'],
+            'national_id' => 'required|numeric|digits:10|unique:users,national_id,',
+            'city' => ['required'],
+            'gym' => ['required'],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'You must enter the name',
+            'email.email' => 'invalid email',
+            'national_id.digits' => 'The national id must be 10 number',
+            // 'avatar.mimes' => 'The image extention shloud be in (jpg,png,jpeg)',
+        ];
+    }
+}

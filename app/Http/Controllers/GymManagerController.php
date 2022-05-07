@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use App\Models\Staff;
+use App\Models\Staff;
 use App\Models\City;
 use App\Models\Gym;
 use App\Models\GymManager;
-use App\Models\User;
+use App\Http\Requests\GymManagerRequest;
+use App\Http\Requests\GymManagerUpdateRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\User;
 
 class GymManagerController extends Controller
 {
@@ -71,29 +75,53 @@ class GymManagerController extends Controller
 
         ]);
     }
-    public function update($userId)
+    public function update($userId, GymManagerUpdateRequest $request)
     {
         $requestData = request()->all();
-        $post = User::find($userId)->update([
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
+            $requestData['avatar']->move(public_path('images'), $imageName);
+            $requestData['avatar'] = $imageName;
+        } else {
+            $imageName = User::find($userId)->avatar;
+        }
+
+        if (isset($request->oldpassword)) {
+            $hashedPassword = User::find($userId)->password;
+            if (Hash::check($request->oldpassword, $hashedPassword)) {
+
+                $user = User::find($userId);
+                $user->password = bcrypt($request->password);
+                $user->save();
+            } else {
+                return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
+            }
+        }
+
+
+        User::find($userId)->update([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
+            'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
-            'role' => "gym_manager",
-        ]);
 
-        $gym = gymManager::where('user_id', $userId)->update([
+
+        ]);
+        gymManager::where('user_id', $userId)->update([
             'gym_id' => $requestData['gym']
         ]);
 
-        // $gym->gym_id = $requestData['gym'];
-        // $gym->save();
-
         return redirect()->route('gym-managers.index');
     }
+
+
+
+
+
     //----------------------- create new member -------------------------
+
+
+
     public function create()
     {
         $cities = City::all();
@@ -106,28 +134,36 @@ class GymManagerController extends Controller
             ]
         );
     }
-    public function store()
+
+
+
+    public function store(GymManagerRequest $request)
     {
         $requestData = request()->all();
-
-        User::create([
+        if (isset($requestData['avatar'])) {
+            $imageName = time() . '.' . $requestData['avatar']->getClientOriginalName();
+            $requestData['avatar']->move(public_path('images'), $imageName);
+        } else {
+            $imageName = 'user_avatar.png';
+        }
+        $gymManager = User::create([
             'name' => $requestData['name'],
             'email' => $requestData['email'],
-            'password' => $requestData['password'],
-            'avatar' => $requestData['avatar'],
+            'password' => Hash::make($requestData['password']),
+            'avatar' => $imageName,
             'national_id' => $requestData['national_id'],
-            'is_baned' => 0,
-            'role' => "gym_manager",
+
+
         ]);
-        $userMember = User::where('name', $requestData['name'])->first();
+        $gymManager->assignRole('gym_manager');
+
+        $user = User::where('name', $requestData['name'])->first();
 
 
 
         gymManager::Create(
             [
-                'user_id' => $userMember->id,
-
-
+                'user_id' => $user->id,
                 'gym_id' => $requestData['gym']
             ]
         );
@@ -135,14 +171,24 @@ class GymManagerController extends Controller
 
         return redirect()->route('gym-managers.index');
     }
+
+
+
+
+
+
+
+
     //-------------------- delete member -------------------------------
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
 
         $member = User::where('id', $request->id)->delete();
         return Response()->json($member);
     }
-    public function ban(Request $request) {
+    public function ban(Request $request)
+    {
 
         $member = User::find($request->id);
         $ban = $member->isBanned() ? $member->unban() : $member->ban();
