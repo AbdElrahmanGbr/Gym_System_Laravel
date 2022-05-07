@@ -30,7 +30,7 @@ class GymManagerRequest extends FormRequest
             'email' => 'required|email|unique:users,email,',
             'password' => ['required', 'min:6', 'max:20'],
             'confirm' => ['required', 'same:password'],
-            'avatar' => ['image', 'mimes:jpg,png,jpeg'],
+            // 'avatar' => ['image', 'mimes:jpg,png,jpeg'],
             'national_id' => 'required|numeric|digits:10|unique:users,national_id,',
             'city' => ['required'],
             'gym' => ['required'],
