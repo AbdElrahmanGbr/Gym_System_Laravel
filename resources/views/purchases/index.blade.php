@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 <div class="text-center mydiv">
-    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-dark">
+    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">
         <thead>
             <tr class="text-white">
                 <th>id</th>
@@ -27,76 +27,83 @@
     </table>
 </div>
 @endsection
-@section('javascripts') 
-    <script>
-        $(document).ready( function () {
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+@section('javascripts')
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
-            ajax:{
+            ajax: {
                 url: "{{ route('purchases.index') }}"
             },
-            columns:[
+            columns: [
 
                 {
-                    data:'id',
-                    name:'id',
-                },   
-                {
-                    data:'userName',
-                    name:'userName',
+                    data: 'id',
+                    name: 'id',
                 },
                 {
-                    data:'email',
-                    name:'email',
-                },
-                
-                {
-                    data:'packageName',
-                    name:'packageName',
+                    data: 'userName',
+                    name: 'userName',
                 },
                 {
-                    data:'price',
-                    name:'price',
-                    render: function(data) {return `$${data * 0.01}`}
+                    data: 'email',
+                    name: 'email',
                 },
-                @can('gym-managers')
+
                 {
-                    data:'gymName',
-                    name:'gymName',
+                    data: 'packageName',
+                    name: 'packageName',
+                },
+                {
+                    data: 'price',
+                    name: 'price',
+                    render: function(data) {
+                        return `$${data * 0.01}`
+                    }
+                },
+                @can('gym-managers') {
+                    data: 'gymName',
+                    name: 'gymName',
                 },
                 @endcan
-                @role('Super-Admin')
-                {
-                    data:'cityName',
-                    name:'cityName',
+                @role('Super-Admin') {
+                    data: 'cityName',
+                    name: 'cityName',
                 },
-                @endrole
-                {
-                    data:'action',
-                    name:'action',
-                    orderable:false,
+                @endrole {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
                 },
             ]
         });
-    } );
-    function deleteFunc(id){
+    });
+
+    function deleteFunc(id) {
         if (confirm("Delete Record?") == true) {
-        var id = id;
-        $.ajax({
-           type:"POST",
-           url: "{{ url('destroy-purchase') }}",
-           data: { id: id },
-           dataType: 'json',
-           success: function(res){
-            $('#table_id').DataTable().ajax.reload();
-              },
-            error:function(){ 
-            alert("Cannot delete this record");
+            var id = id;
+            $.ajax({
+                type: "POST",
+                url: "{{ url('destroy-purchase') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#table_id').DataTable().ajax.reload();
+                },
+                error: function() {
+                    alert("Cannot delete this record");
+                }
+            });
+
         }
-         });
-         
-    }}
-    </script>
+    }
+</script>
 @endsection

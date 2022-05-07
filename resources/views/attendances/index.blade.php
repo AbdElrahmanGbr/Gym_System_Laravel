@@ -6,7 +6,7 @@
 <div class="text-center mydiv">
     <h1> User Attendance</h1>
 
-    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-dark">
+    <table id="table_id" class="table table-responsive-sm  cell-border compact stripe table-dark my-4 text-white">
         <thead>
             <tr class="text-white">
 
@@ -28,51 +28,51 @@
 </div>
 @endsection
 @section('javascripts')
-    <script>
-         $(document).ready( function () {
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('#table_id').DataTable({
             processing: true,
             serverSide: true,
-            ajax:{
+            ajax: {
                 url: "{{ route('attendances.index') }}"
             },
-            columns:[
-                @role('Super-Admin')
-                {
-                    data:'cityName',
-                    name:'cityName',
+            columns: [
+                @role('Super-Admin') {
+                    data: 'cityName',
+                    name: 'cityName',
                 },
                 @endrole
-                @can('gym-managers')
-                {
-                    data:'gymName',
-                    name:'gymName',
+                @can('gym-managers') {
+                    data: 'gymName',
+                    name: 'gymName',
                 },
-                @endcan
-                {
-                  data:'userName',
-                  name: 'userName',
+                @endcan {
+                    data: 'userName',
+                    name: 'userName',
                 },
                 {
-                  data:'userEmail',
-                  name: 'userEmail',
+                    data: 'userEmail',
+                    name: 'userEmail',
                 },
 
                 {
-                    data:'sessionName',
-                    name:'sessionName',
+                    data: 'sessionName',
+                    name: 'sessionName',
 
                 },
                 {
-                    data:'sessionTime',
-                    name:'sessionTime',
+                    data: 'sessionTime',
+                    name: 'sessionTime',
 
                 },
 
             ]
         });
-    } );
-
-  </script>
+    });
+</script>
 @endsection
