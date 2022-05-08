@@ -33,7 +33,7 @@ class CityManagerController extends Controller {
     }
     //--------------------------- edit User member -----------------------
     public function edit($userId) {
-        
+
         $user = User::find($userId);
         $cities = City::all();
         return view('city-managers.edit', [

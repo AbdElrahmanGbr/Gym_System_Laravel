@@ -45,7 +45,7 @@ class UserNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->line($this->data['message'])
-            ->action('Notification Action', url('/'))
+            ->action('Notification Action', url('/login'))
             ->line('Thank you for using our application!');
     }
 
