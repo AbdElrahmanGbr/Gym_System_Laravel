@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth', 'middleware' => 'forbid-banned-user', 'mid
 
         Route::PUT('/city-managers/{id}', [CityManagerController::class, 'update'])->name('city-managers.update');
         Route::POST('/city-managers', [CityManagerController::class, 'store'])->name('city-managers.store');
-        Route::GET('/city-managers/{id}/ban', [CityManagerController::class, ''])->name('city-managers.ban');
+        Route::GET('/city-managers/{id}/ban', [CityManagerController::class, 'ban'])->name('city-managers.ban');
 
 
         //------------------------- Cities Routes ------------------------------
