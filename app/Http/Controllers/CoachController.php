@@ -177,9 +177,9 @@ class coachController extends Controller
             return view('coaches.profile', ['coach' => Auth::user()]);
 
         $coach = User::find($id);
-        $gyms = Gym::all();
-        return view('coaches.profile', ['coach' => $coach, 'gyms' => $gyms]);
+        return view('coaches.profile', ['coach' => $coach]);
     }
+    
     public function sessions($id)
     {
         // $coachSession = User::find($id)->coachSessions;
@@ -248,28 +248,6 @@ class coachController extends Controller
                 'coachId' => $userId,
             ]
         );
-    }
-
-    public function passwordUpdate(Request $request, $userId)
-    {
-        $this->validate($request, [
-            'old_password' => ['nullable'],
-            'password' => ['min:6', 'max:20', 'nullable'],
-            'confirm' => ['same:password', 'nullable'],
-        ]);
-
-        if (isset($request->oldpassword)) {
-            $hashedPassword = User::find($userId)->password;
-            if (Hash::check($request->oldpassword, $hashedPassword)) {
-
-                $user = User::find($userId);
-                $user->password = bcrypt($request->password);
-                $user->save();
-            } else {
-                return Redirect::back()->withErrors(['msg' => 'Wrong old password']);
-            }
-        }
-        return redirect()->route('coaches.show', $userId);
     }
 
     public function passwordUpdate(Request $request, $userId)

@@ -33,7 +33,7 @@ $url = url("/coaches/$id");
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-white">
         </tbody>
     </table>
     <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">

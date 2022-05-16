@@ -23,15 +23,14 @@
                 {{-- <th scope="col">Actions</th> --}}
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-white">
 
         </tbody>
     </table>
 
 </div>
 <!--****************************************edit modal*************************************-->
-<div id="myModal" class="modal fade " data-bs-backdrop="static" bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div id="myModal" class="modal fade " data-bs-backdrop="static" bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered justify-content-sm-center ">
         <div class="modal-content">
 
@@ -94,7 +93,7 @@
 
 @section('javascripts')
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -122,22 +121,19 @@
                     data: 'finish_at',
                     name: 'finish_at'
                 },
-                @can('session')
-                {
+                @can('session') {
                     data: 'Coaches',
                     name: 'Coaches'
                 },
                 @endcan
-                @can('gym-managers')
-                {
-                    data:'gym',
-                    name:'gym',
+                @can('gym-managers') {
+                    data: 'gym',
+                    name: 'gym',
                 },
                 @endcan
-                @role('Super-Admin')
-                {
-                    data:'city',
-                    name:'city',
+                @role('Super-Admin') {
+                    data: 'city',
+                    name: 'city',
                 },
                 @endrole
                 // {
@@ -160,10 +156,10 @@
                     id: id
                 },
                 dataType: 'json',
-                success: function (res) {
+                success: function(res) {
                     $('#myTable').DataTable().ajax.reload();
                 },
-                error: function () {
+                error: function() {
                     alert("There are people will attend this session you cannot delete it:(");
                 }
             });
@@ -173,45 +169,45 @@
     function EditSession(id) {
         var id = id;
         $.ajax({
-           type:"GET",
-           url: "{{ route('sessions.edit') }}",
-           data: { id: id },
-           dataType: 'json',
-           success: function(data){
-             //get data and put it into the modal
-               var startdate=(data.start_at).split(" ");
-               var finishdate=(data.finish_at).split(" ");
-               var day=startdate[0];
-               var StartTime=startdate[1];
-               var FinishTime=finishdate[1];
-               var selectedCoaches=data.selectedCoaches;
-               var coachesid=data.coachesid; 
-               var options=data.coaches;
+            type: "GET",
+            url: "{{ route('sessions.edit') }}",
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                //get data and put it into the modal
+                var startdate = (data.start_at).split(" ");
+                var finishdate = (data.finish_at).split(" ");
+                var day = startdate[0];
+                var StartTime = startdate[1];
+                var FinishTime = finishdate[1];
+                var selectedCoaches = data.selectedCoaches;
+                var coachesid = data.coachesid;
+                var options = data.coaches;
 
-               $('#id').val(id);
-               $('#name').val(data.name);
-               $('#day').val(day);
-               $('#start').val(StartTime);
-               $('#finish').val(FinishTime);
-               $("#coaches").empty();
+                $('#id').val(id);
+                $('#name').val(data.name);
+                $('#day').val(day);
+                $('#start').val(StartTime);
+                $('#finish').val(FinishTime);
+                $("#coaches").empty();
 
-               for (var j = 0; j< options.length; j++) {
-                      if(jQuery.inArray(coachesid[j], selectedCoaches) !== -1){
-                         $("#coaches").append(new Option(options[j], coachesid[j],true, true));
-                       }
-                      else{
+                for (var j = 0; j < options.length; j++) {
+                    if (jQuery.inArray(coachesid[j], selectedCoaches) !== -1) {
+                        $("#coaches").append(new Option(options[j], coachesid[j], true, true));
+                    } else {
                         $("#coaches").append(new Option(options[j], coachesid[j]));
 
-                       }
-                   }
-               //show the modal
-               var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-               myModal.show();
-           }
+                    }
+                }
+                //show the modal
+                var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+                myModal.show();
+            }
 
-          });   
+        });
 
     }
-
 </script>
 @endsection

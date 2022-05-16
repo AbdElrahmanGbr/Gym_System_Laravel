@@ -27,8 +27,8 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-between ">
                                     <b>Gyms</b>
                                     <ul class="list-unstyled text-primary">
-                                        @if (is_array($gyms) || is_object($gyms))
-                                        @foreach ($coach->gyms as $gyms)
+                                        @if (is_array ($coach->gyms) || is_object ($coach->gyms))
+                                        @foreach($coach->gyms as $gym)
                                         <li>{{$gym->name}}</li>
                                         @endforeach
                                         @endif
