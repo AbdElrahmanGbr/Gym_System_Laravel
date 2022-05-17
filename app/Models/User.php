@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Cog\Contracts\Ban\Bannable as BannableContract;
 
 
-class User extends Authenticatable implements MustVerifyEmail,BannableContract
+class User extends Authenticatable implements MustVerifyEmail, BannableContract
 {
     use HasApiTokens, HasFactory, HasRoles, Bannable, Billable, Notifiable;
 
@@ -31,7 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail,BannableContract
         'avatar',
         'birth_date',
         'gym_id',
-        'email_verified_at'
+        'email_verified_at',
+        'national_id'
     ];
 
     /**

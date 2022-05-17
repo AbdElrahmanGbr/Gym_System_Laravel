@@ -41,7 +41,6 @@
                 @endforeach
             </select>
         </div>
-
         <input type="hidden" name="id" value={{$coach->id}}>
 
         <div class="mb-3 col-sm-6" id="gymDiv">

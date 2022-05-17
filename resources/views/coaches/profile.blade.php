@@ -23,18 +23,18 @@
                                 </li>
                             </div>
 
-                            <div class="p-2 bg-light border">
+                            <!-- <div class="p-2 bg-light border">
                                 <li class="list-group-item d-flex align-items-center justify-content-between ">
                                     <b>Gyms</b>
                                     <ul class="list-unstyled text-primary">
                                         @if (is_array ($coach->gyms) || is_object ($coach->gyms))
-                                        @foreach($coach->gyms as $gym)
+                                        @foreach($coach->coachGyms as $gym)
                                         <li>{{$gym->name}}</li>
                                         @endforeach
                                         @endif
                                     </ul>
                                 </li>
-                            </div>
+                            </div> -->
 
                         </div>
 

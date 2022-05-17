@@ -36,20 +36,6 @@ $url = url("/coaches/$id");
         <tbody class="text-white">
         </tbody>
     </table>
-    <table id="table_id" class="table table-responsive-md  cell-border compact stripe table-dark my-4 text-white">
-        <thead>
-            <tr class="text-white">
-                <th>id</th>
-                <th>name</th>
-                <th>email</th>
-                <th>avatar</th>
-                <th>national_id</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
 </div>
 

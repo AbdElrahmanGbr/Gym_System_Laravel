@@ -30,8 +30,9 @@ class UserFactory extends Factory
             'password' => Hash::make(123456),
             'remember_token' => Str::random(10),
             'gender' => $gender,
-            'gym_id' => 1,
-            'birth_date' => $this->faker->dateTimeThisYear($max = 'now'),
+            'gym_id' => rand(1, 10),
+            'national_id' => rand(1000000000, 1324567123),
+            'birth_date' => $this->faker->dateTimeBetween('-50 years', 'now'),
         ];
     }
 
